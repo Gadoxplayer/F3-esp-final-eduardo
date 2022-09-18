@@ -1,9 +1,23 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import BodySingle from "dh-marvel/components/layouts/body/single/body-single";
-import { CardTemplate } from "dh-marvel/components/cardTemplate/cardTemplate";
+import { GridTemplate } from "dh-marvel/components/gridTemplate/gridTemplate";
+import { Comic } from "dh-marvel/features/types";
+import { getComics } from "dh-marvel/services/marvel/marvel.service";
 
-const Index: NextPage = () => {
+type props = {
+  comics: Comic[];
+};
+export async function getStaticProps() {
+  const res = await getComics(0, 12);
+  return {
+    props: {
+      comics: res.data.results,
+    },
+  };
+}
+
+const Index: NextPage<props> = ({ comics }) => {
   return (
     <>
       <Head>
@@ -12,8 +26,8 @@ const Index: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <BodySingle title={"Sample"}>
-        <CardTemplate />
+      <BodySingle title={"Todos los comics"}>
+        <GridTemplate comics={comics} />
       </BodySingle>
     </>
   );
