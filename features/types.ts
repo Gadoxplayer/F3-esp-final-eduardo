@@ -1,9 +1,10 @@
-type Images = {
+export type Images = {
   path: string;
   extension: string;
 };
 
 export type Comic = {
+  comic: any;
   id: number;
   digitalId: number;
   title: string;

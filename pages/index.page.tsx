@@ -4,20 +4,33 @@ import BodySingle from "dh-marvel/components/layouts/body/single/body-single";
 import { GridTemplate } from "dh-marvel/components/gridTemplate/gridTemplate";
 import { Comic } from "dh-marvel/features/types";
 import { getComics } from "dh-marvel/services/marvel/marvel.service";
+import { ButtonPaginationTemplate } from "dh-marvel/components/buttonTemplate/buttonPaginationTemplate";
+import { useState } from "react";
+import React from "react";
 
 type props = {
   comics: Comic[];
+  count: number;
 };
 export async function getStaticProps() {
   const res = await getComics(0, 12);
   return {
     props: {
       comics: res.data.results,
+      count: res.data.count,
     },
   };
 }
 
 const Index: NextPage<props> = ({ comics }) => {
+// logic to set the page for pagination
+const [page, setPage] = React.useState(1);
+const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  setPage(value);
+  console.log(page);
+};
+console.log(page); 
+
   return (
     <>
       <Head>
@@ -27,6 +40,7 @@ const Index: NextPage<props> = ({ comics }) => {
       </Head>
 
       <BodySingle title={"Todos los comics"}>
+        <ButtonPaginationTemplate />
         <GridTemplate comics={comics} />
       </BodySingle>
     </>

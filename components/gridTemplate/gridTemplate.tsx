@@ -15,6 +15,7 @@ export const GridTemplate: FC<props> = ({ comics }) => {
           <Grid xs={12} sm={4} md={4} key={index}>
             <CardTemplate
               title={comic.title}
+              id={comic.id}
               image={comic.thumbnail.path + "." + comic.thumbnail.extension}
             />
           </Grid>
