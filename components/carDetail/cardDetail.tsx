@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { FC } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Link from "next/link";
 
 type props = {
   title: string;
@@ -49,7 +50,9 @@ export const CardDetail: FC<props> = ({
       </CardContent>
       <CardActions>
         {stock ? (
-          <Button size="small">Comprar</Button>
+          <Link href="/checkout">
+            <Button size="small">Comprar</Button>
+          </Link>
         ) : (
           <Button size="small" disabled>
             Comprar
@@ -97,9 +100,7 @@ export const CardDetail: FC<props> = ({
               <Typography>{characters}</Typography>
             </AccordionDetails>
           </Accordion>
-        ) : (
-          null
-        )}
+        ) : null}
       </CardActions>
     </Card>
   );
