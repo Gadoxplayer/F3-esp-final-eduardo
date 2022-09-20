@@ -17,15 +17,19 @@ type props = {
   image: string;
   description: string;
   prices: number;
-  characters: string;
+  characters: string | string[];
+  stock: number;
+  available: number;
 };
 
-export const CardTemplate: FC<props> = ({
+export const CardDetail: FC<props> = ({
   title,
   image,
   prices,
   description,
   characters,
+  stock,
+  available,
 }) => {
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -39,33 +43,58 @@ export const CardTemplate: FC<props> = ({
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Comprar</Button>
+        {stock ? (
+          <Button size="small">Comprar</Button>
+        ) : (
+          <Button size="small" disabled>
+            Comprar
+          </Button>
+        )}
 
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography>Description</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>{description}</Typography>
-          </AccordionDetails>
-        </Accordion>
+        {description ? (
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography>Description</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>{description}</Typography>
+            </AccordionDetails>
+          </Accordion>
+        ) : (
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography>Description</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>No description available</Typography>
+            </AccordionDetails>
+          </Accordion>
+        )}
 
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography>Characters</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>{characters}</Typography>
-          </AccordionDetails>
-        </Accordion>
+        {available ? (
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography>Characters</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>{characters}</Typography>
+            </AccordionDetails>
+          </Accordion>
+        ) : (
+          null
+        )}
       </CardActions>
     </Card>
   );
