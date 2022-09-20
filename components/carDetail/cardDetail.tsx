@@ -16,7 +16,8 @@ type props = {
   title: string;
   image: string;
   description: string;
-  prices: number;
+  price: number;
+  oldPrice: number;
   characters: string | string[];
   stock: number;
   available: number;
@@ -25,7 +26,8 @@ type props = {
 export const CardDetail: FC<props> = ({
   title,
   image,
-  prices,
+  price,
+  oldPrice,
   description,
   characters,
   stock,
@@ -39,7 +41,10 @@ export const CardDetail: FC<props> = ({
           {title}
         </Typography>
         <Typography gutterBottom variant="h5" component="div">
-          {prices}
+          Before: {oldPrice}$
+        </Typography>
+        <Typography gutterBottom variant="h5" component="div">
+          {price}$
         </Typography>
       </CardContent>
       <CardActions>
