@@ -7,29 +7,50 @@ import { getComics } from "dh-marvel/services/marvel/marvel.service";
 import { ButtonPaginationTemplate } from "dh-marvel/components/buttonTemplate/buttonPaginationTemplate";
 import { useState } from "react";
 import React from "react";
+import { Box, CircularProgress } from "@mui/material";
 
 type props = {
   comics: Comic[];
-  count: number;
+  pages: number;
 };
 export async function getStaticProps() {
   const res = await getComics(0, 12);
   return {
     props: {
       comics: res.data.results,
-      count: res.data.count,
+      pages: res.data.total,
     },
   };
 }
 
-const Index: NextPage<props> = ({ comics }) => {
-// logic to set the page for pagination
-const [page, setPage] = React.useState(1);
-const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-  setPage(value);
-  console.log(page);
-};
-console.log(page); 
+const Index: NextPage<props> = ({ comics, pages }) => {
+  // logic to set the page for pagination
+  const [page, setPage] = React.useState(1);
+  const [comicData, setComicData] = useState(comics);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+    handleNextPage(value * 12 - 12);
+  };
+
+  const handleNextPage = async (offset: number) => {
+    setIsLoading(true);
+    const params = new URLSearchParams();
+    params.set("offset", `${offset}`);
+    params.set("limit", `${12}`);
+    await fetch("/api/comicPagination?" + params.toString())
+      .then((res) => res.json())
+      .then((data) => {
+        setComicData(data.comics.results);
+        return data;
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+    // const response = await fetch("/api/comicPagination?" + params.toString())
+    // const data = await response.json();
+  };
 
   return (
     <>
@@ -40,8 +61,24 @@ console.log(page);
       </Head>
 
       <BodySingle title={"Todos los comics"}>
-        <ButtonPaginationTemplate />
-        <GridTemplate comics={comics} />
+        <ButtonPaginationTemplate
+          count={Math.ceil(pages / 12)}
+          page={page}
+          onChange={handleChange}
+        />
+        {isLoading ? (
+          <Box sx={{ display: "flex" }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <GridTemplate comics={comicData} />
+        )}
+
+        <ButtonPaginationTemplate
+          page={page}
+          onChange={handleChange}
+          count={Math.ceil(pages / 12)}
+        />
       </BodySingle>
     </>
   );

@@ -2,14 +2,20 @@ import { Pagination, Stack } from "@mui/material";
 import React from "react";
 import { FC } from "react";
 
-export const ButtonPaginationTemplate: FC<any> = ({ page: any }) => {
+type props = {
+  page: number;
+  onChange: any;
+  count: number
+};
+
+export const ButtonPaginationTemplate: FC<props> = ({ page, onChange, count }) => {
   return (
     <Stack spacing={2}>
       <Pagination
-        count={12}
+        count={count}
         color="primary"
-        // page={page}
-        // onChange={handleChange}
+        page={page}
+        onChange={onChange}
       />
       <br></br>
     </Stack>
