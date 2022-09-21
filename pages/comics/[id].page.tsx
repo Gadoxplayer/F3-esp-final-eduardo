@@ -5,7 +5,12 @@ import { NextPage } from "next";
 interface props {
   data: Comic;
 }
-
+/**
+ * Route to display the details of a selected comic
+ * @param data data fetched from the api
+ * @returns a component which renders details of a comic
+ * @author Eduardo C
+ */
 const ComicsDetail: NextPage<props> = ({ data }) => {
   return (
     <>

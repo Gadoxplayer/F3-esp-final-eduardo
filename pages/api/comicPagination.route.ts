@@ -8,7 +8,12 @@ type Data = {
     error: string
     
 }
-
+/**
+ * handlerComicPaginator is a handler for the route, which controls the request for the pagination, brigning the data from the api according to the page the user selects
+ * @param req 
+ * @param res 
+ * @author Eduardo C
+ */
 const handlerComicPaginator = async (req:NextApiRequest, res:NextApiResponse<Data>) => {
     try {
         if (req.method === "GET") {
