@@ -2,24 +2,24 @@ import { Box, Grid, TextField } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 
 export const FormDeliveryData = () => {
-  const register = useFormContext();
+  const {register} = useFormContext();
 
   return (
     <>
       <Box sx={{ width: "100%", p: 2 }}>
         <TextField
-          {...register}
+          {...register("addressNumber")}
           required
           fullWidth
-          id="adressNumber"
-          label="Adress Number"
-          name="adressNumber"
-          autoComplete="adressNumber"
+          id="addressNumber"
+          label="Address Number"
+          name="addressNumber"
+          autoComplete="addressNumber"
         />
       </Box>
       <Box sx={{ width: "100%", p: 2 }}>
         <TextField
-          {...register}
+          {...register("typeOfHouse")}
           fullWidth
           id="typeOfHouse"
           label="Apartment number, floor, etc."
@@ -29,7 +29,7 @@ export const FormDeliveryData = () => {
       </Box>
       <Box sx={{ width: "100%", p: 2 }}>
         <TextField
-          {...register}
+          {...register("city")}
           required
           fullWidth
           id="city"
@@ -42,7 +42,7 @@ export const FormDeliveryData = () => {
         <Grid container rowSpacing={1}>
           <Grid xs={8}>
             <TextField
-              {...register}
+              {...register("province")}
               required
               fullWidth
               id="province"
@@ -53,7 +53,7 @@ export const FormDeliveryData = () => {
           </Grid>
           <Grid xs={4}>
             <TextField
-              {...register}
+              {...register("postalCode")}
               required
               fullWidth
               id="postalCode"

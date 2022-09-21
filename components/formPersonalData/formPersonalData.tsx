@@ -1,14 +1,16 @@
 import { Box, TextField } from "@mui/material";
-import { useFormContext } from "react-hook-form";
+import { useForm, useFormContext } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 export const FormPersonalData = () => {
-  const register = useFormContext();
+  const { register } = useFormContext();
 
   return (
     <>
       <Box sx={{ width: "100%", p: 2 }}>
         <TextField
-          {...register}
+          {...register("name")}
           required
           fullWidth
           id="name"
@@ -19,18 +21,18 @@ export const FormPersonalData = () => {
       </Box>
       <Box sx={{ width: "100%", p: 2 }}>
         <TextField
-          {...register}
+          {...register("lastName")}
           required
           fullWidth
-          id="lastname"
+          id="lastName"
           label="Last Name"
-          name="LastName"
+          name="lastName"
           autoComplete="lastName"
         />
       </Box>
       <Box sx={{ width: "100%", p: 2 }}>
         <TextField
-          {...register}
+          {...register("email")}
           required
           fullWidth
           id="email"
