@@ -1,10 +1,14 @@
 import { Box, Grid, TextField } from "@mui/material";
+import { useFormContext } from "react-hook-form";
 
 export const FormPaymentData = () => {
+  const register = useFormContext();
+
   return (
     <form>
       <Box sx={{ width: "100%", p: 2 }}>
         <TextField
+          {...register}
           required
           fullWidth
           id="ccname"
@@ -15,6 +19,7 @@ export const FormPaymentData = () => {
       </Box>
       <Box sx={{ width: "100%", p: 2 }}>
         <TextField
+          {...register}
           required
           fullWidth
           id="cardNumber"
@@ -27,6 +32,7 @@ export const FormPaymentData = () => {
         <Grid container rowSpacing={1}>
           <Grid xs={4}>
             <TextField
+              {...register}
               required
               fullWidth
               id="exDate"
@@ -37,6 +43,7 @@ export const FormPaymentData = () => {
           </Grid>
           <Grid xs={4}>
             <TextField
+              {...register}
               required
               fullWidth
               id="CVV"

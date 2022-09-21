@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { FC, useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 import { FormDeliveryData } from "../formDeliveryData/formDeliveryData";
 import { FormPaymentData } from "../formPaymentData/formPaymentData";
 import { FormPersonalData } from "../formPersonalData/formPersonalData";
@@ -21,6 +22,10 @@ const steps = ["Personal Data", "Delivery Adress", "Payment Infomation"];
 
 export const CheckoutView: FC<props> = ({ title }) => {
   const [activeStep, setActiveStep] = useState(0);
+
+  const methods = useForm()
+
+  const submit = methods.handleSubmit((data) => console.log(data));
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -61,9 +66,13 @@ export const CheckoutView: FC<props> = ({ title }) => {
         ) : (
           <React.Fragment>
             <Typography sx={{ mt: 2, mb: 1 }}>
+              <FormProvider {...methods}>
+                <form onSubmit={submit}>
               {activeStep === 0 && <FormPersonalData />}
               {activeStep === 1 && <FormDeliveryData />}
               {activeStep === 2 && <FormPaymentData />}
+              </form>
+              </FormProvider>
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
               <Button

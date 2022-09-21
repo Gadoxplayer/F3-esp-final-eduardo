@@ -1,10 +1,14 @@
 import { Box, TextField } from "@mui/material";
+import { useFormContext } from "react-hook-form";
 
 export const FormPersonalData = () => {
+  const register = useFormContext();
+
   return (
-    <form>
+    <>
       <Box sx={{ width: "100%", p: 2 }}>
         <TextField
+          {...register}
           required
           fullWidth
           id="name"
@@ -15,6 +19,7 @@ export const FormPersonalData = () => {
       </Box>
       <Box sx={{ width: "100%", p: 2 }}>
         <TextField
+          {...register}
           required
           fullWidth
           id="lastname"
@@ -25,6 +30,7 @@ export const FormPersonalData = () => {
       </Box>
       <Box sx={{ width: "100%", p: 2 }}>
         <TextField
+          {...register}
           required
           fullWidth
           id="email"
@@ -33,6 +39,6 @@ export const FormPersonalData = () => {
           autoComplete="email"
         />
       </Box>
-    </form>
+    </>
   );
 };
