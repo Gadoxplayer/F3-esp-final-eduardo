@@ -8,6 +8,9 @@ import {
 } from "@mui/material";
 import React from "react";
 import { FC, useState } from "react";
+import { FormDeliveryData } from "../formDeliveryData/formDeliveryData";
+import { FormPaymentData } from "../formPaymentData/formPaymentData";
+import { FormPersonalData } from "../formPersonalData/formPersonalData";
 import BodySingle from "../layouts/body/single/body-single";
 
 type props = {
@@ -57,7 +60,11 @@ export const CheckoutView: FC<props> = ({ title }) => {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
+            <Typography sx={{ mt: 2, mb: 1 }}>
+              {activeStep === 0 && <FormPersonalData />}
+              {activeStep === 1 && <FormDeliveryData />}
+              {activeStep === 2 && <FormPaymentData />}
+            </Typography>
             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
               <Button
                 color="inherit"
