@@ -10,7 +10,7 @@ import {
   AccordionSummary,
   Stack,
 } from "@mui/material";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Link from "next/link";
 import { Box } from "@mui/system";
@@ -24,6 +24,7 @@ type props = {
   characters: string | string[];
   stock: number;
   available: number;
+  id: number;
 };
 
 export const CardDetail: FC<props> = ({
@@ -35,7 +36,9 @@ export const CardDetail: FC<props> = ({
   characters,
   stock,
   available,
+  id,
 }) => {
+
   return (
     <Box sx={{ p: 4 }}>
       <Card sx={{ maxWidth: 345 }}>
@@ -60,7 +63,7 @@ export const CardDetail: FC<props> = ({
         <CardActions>
           <Stack spacing={2}>
             {stock ? (
-              <Link href="/checkout">
+              <Link href={`/checkout/${id}`}>
                 <Button size="small">Comprar</Button>
               </Link>
             ) : (

@@ -25,7 +25,7 @@ const ComicsDetail: NextPage<props> = ({ data }) => {
           })
           : null}
         stock={data.comic.stock}
-        available={data.comic.characters.available} oldPrice={data.comic.oldPrice}      ></CardDetail>
+        available={data.comic.characters.available} oldPrice={data.comic.oldPrice} id={data.comic.id}      ></CardDetail>
     </>
   );
 };

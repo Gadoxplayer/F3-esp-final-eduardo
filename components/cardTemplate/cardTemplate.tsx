@@ -17,14 +17,14 @@ type props = {
 };
 
 export const CardTemplate: FC<props> = ({ title, image, id }) => {
-  const callApiGetID = async () => {
-    const response = await fetch("/api/comic/" + id);
-    const data = await response.json();
-  };
+  // const callApiGetID = async () => {
+  //   const response = await fetch("/api/comic/" + id);
+  //   const data = await response.json();
+  // };
 
-  const handleClick = () => {
-    callApiGetID();
-  };
+  // const handleClick = () => {
+  //   callApiGetID();
+  // };
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -37,9 +37,7 @@ export const CardTemplate: FC<props> = ({ title, image, id }) => {
       <CardActions>
         <Button size="small">Comprar</Button>
         <Link href={`/comics/${id}`}>
-          <Button size="small" onClick={handleClick}>
-            Ver detalle
-          </Button>
+          <Button size="small">Ver detalle</Button>
         </Link>
       </CardActions>
     </Card>

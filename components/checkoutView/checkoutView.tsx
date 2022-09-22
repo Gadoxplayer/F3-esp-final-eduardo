@@ -2,6 +2,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Box,
   Button,
+  Card,
+  CardContent,
+  CardMedia,
   Step,
   StepLabel,
   Stepper,
@@ -18,11 +21,13 @@ import BodySingle from "../layouts/body/single/body-single";
 
 type props = {
   title: string;
+  image: string;
+  price: number;
 };
 
 const steps = ["Personal Data", "Delivery Adress", "Payment Infomation"];
 
-export const CheckoutView: FC<props> = ({ title }) => {
+export const CheckoutView: FC<props> = ({ title, image, price }) => {
   const [activeStep, setActiveStep] = useState(0);
 
   // methods to configurate the forms
@@ -44,7 +49,7 @@ export const CheckoutView: FC<props> = ({ title }) => {
   };
 
   return (
-    <BodySingle title={"Checkout: title"}>
+    <BodySingle title={`Checkout: ${title}`}>
       <FormProvider {...methods}>
         <form>
           <Box sx={{ width: "100%" }}>
@@ -95,6 +100,23 @@ export const CheckoutView: FC<props> = ({ title }) => {
           </Box>
         </form>
       </FormProvider>
+      <Card sx={{ maxWidth: 345, alignSelf: "center" }}>
+        <CardMedia
+          component="img"
+          height="300"
+          image={image}
+          alt={title}
+          sx={{ padding: "1em 1em 0 1em", objectFit: "contain" }}
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h4" component="div">
+            {title}
+          </Typography>
+          <Typography gutterBottom variant="h5" component="div">
+            {price}$
+          </Typography>
+        </CardContent>
+      </Card>
     </BodySingle>
   );
 };
