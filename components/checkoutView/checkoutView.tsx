@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { FC, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, useWatch } from "react-hook-form";
 import UserSchema from "schemas/userSchema";
 import { FormDeliveryData } from "../formDeliveryData/formDeliveryData";
 import { FormPaymentData } from "../formPaymentData/formPaymentData";
@@ -27,6 +27,8 @@ export const CheckoutView: FC<props> = ({ title }) => {
 
   // methods to configurate the forms
   const methods = useForm();
+  const { getValues } = useForm();
+
   // methods to configurate the stepper
 
   const handleNext = () => {
