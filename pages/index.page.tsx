@@ -28,22 +28,22 @@ const Index: NextPage<props> = ({ comics, pages }) => {
   const [page, setPage] = React.useState(1);
   const [comicData, setComicData] = useState(comics);
   const [isLoading, setIsLoading] = useState(false);
-/**
- * handleChange function recieves an event and updates the state -page- and calls the function handleNextPage.
- * This function is called when the user clicks on a button of the pagination
- * @param event 
- * @param value 
- * @author Eduardo Campo
- */
+  /**
+   * handleChange function recieves an event and updates the state -page- and calls the function handleNextPage.
+   * This function is called when the user clicks on a button of the pagination
+   * @param event
+   * @param value
+   * @author Eduardo Campo
+   */
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
     handleNextPage(value * 12 - 12);
   };
-/**
- * handleNextPage function is a handler to set the page for the pagination making a call to the corresponding api
- * @param offset dinamic param to set the pagination data
- * @author Eduardo C
- */
+  /**
+   * handleNextPage function is a handler to set the page for the pagination making a call to the corresponding api
+   * @param offset dinamic param to set the pagination data
+   * @author Eduardo C
+   */
   const handleNextPage = async (offset: number) => {
     setIsLoading(true);
     const params = new URLSearchParams();
