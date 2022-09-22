@@ -38,7 +38,6 @@ export const CardDetail: FC<props> = ({
   available,
   id,
 }) => {
-
   return (
     <Box sx={{ p: 4 }}>
       <Card sx={{ maxWidth: 345 }}>
@@ -63,7 +62,7 @@ export const CardDetail: FC<props> = ({
         <CardActions>
           <Stack spacing={2}>
             {stock ? (
-              <Link href={`/checkout/${id}`}>
+              <Link href={`/checkout/${id}`} >
                 <Button size="small">Comprar</Button>
               </Link>
             ) : (
