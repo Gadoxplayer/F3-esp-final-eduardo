@@ -5,28 +5,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import UserSchema from "schemas/userSchema";
 
 export const FormPersonalData = () => {
-  const { register } = useFormContext();
-
-  //   const methods = useForm({
-  //     mode: "onBlur",
-  //     resolver: yupResolver(UserSchema),
-  //   });
-  //   console.log(errors);
-
-  const formOptions: any = {
+  const {
+    register,
+    formState: { errors },
+  } = useForm({
     mode: "onBlur",
     resolver: yupResolver(UserSchema),
-  };
-
-  const { formState }: any = useForm(formOptions);
-  const { errors }: any = formState;
-
-  const handleBlur = (errors: any) => {
-    console.log(errors.name, "hola");
-  };
-
+  });
   return (
-    <form onBlur={handleBlur}>
+    <Box>
       <Box sx={{ width: "100%", p: 2 }}>
         <TextField
           {...register("name")}
@@ -36,9 +23,8 @@ export const FormPersonalData = () => {
           label="Name"
           name="name"
           autoComplete="Name"
-          className={`form-control ${errors.name ? "is-invalid" : ""}`}
+          helperText={errors?.name ? String(errors?.name?.message) : ""}
         />
-        <div className="invalid-feedback">{errors.name?.message}</div>
       </Box>
       <Box sx={{ width: "100%", p: 2 }}>
         <TextField
@@ -49,6 +35,7 @@ export const FormPersonalData = () => {
           label="Last Name"
           name="lastName"
           autoComplete="lastName"
+          helperText={errors?.name ? String(errors?.lastName?.message) : ""}
         />
       </Box>
       <Box sx={{ width: "100%", p: 2 }}>
@@ -60,8 +47,9 @@ export const FormPersonalData = () => {
           label="Email Address"
           name="email"
           autoComplete="email"
+          helperText={errors?.name ? String(errors?.email?.message) : ""}
         />
       </Box>
-    </form>
+    </Box>
   );
 };

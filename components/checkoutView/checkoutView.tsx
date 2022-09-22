@@ -1,3 +1,4 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Box,
   Button,
@@ -9,6 +10,7 @@ import {
 import React from "react";
 import { FC, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import UserSchema from "schemas/userSchema";
 import { FormDeliveryData } from "../formDeliveryData/formDeliveryData";
 import { FormPaymentData } from "../formPaymentData/formPaymentData";
 import { FormPersonalData } from "../formPersonalData/formPersonalData";
@@ -23,10 +25,7 @@ const steps = ["Personal Data", "Delivery Adress", "Payment Infomation"];
 export const CheckoutView: FC<props> = ({ title }) => {
   const [activeStep, setActiveStep] = useState(0);
   // methods to configurate the forms
-  const methods = useForm()
-
-  const submit = methods.handleSubmit((data) => console.log(data));
-
+  const methods = useForm();
   // methods to configurate the stepper
 
   const handleNext = () => {
@@ -44,7 +43,7 @@ export const CheckoutView: FC<props> = ({ title }) => {
   return (
     <BodySingle title={"Checkout: title"}>
       <FormProvider {...methods}>
-        <form onSubmit={submit}>
+        <form>
           <Box sx={{ width: "100%" }}>
             <Stepper activeStep={activeStep}>
               {steps.map((label, index) => {
@@ -84,7 +83,7 @@ export const CheckoutView: FC<props> = ({ title }) => {
                     Back
                   </Button>
                   <Box sx={{ flex: "1 1 auto" }} />
-                  <Button onClick={handleNext}>
+                  <Button onClick={handleNext} type="submit">
                     {activeStep === steps.length - 1 ? "Finish" : "Next"}
                   </Button>
                 </Box>
