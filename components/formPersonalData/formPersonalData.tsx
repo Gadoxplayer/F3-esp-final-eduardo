@@ -1,10 +1,16 @@
 import { Box, TextField } from "@mui/material";
-import { useForm, useFormContext } from "react-hook-form";
+import { useController, useForm, useFormContext } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import UserSchema from "schemas/userSchema";
+import { SetStateAction, useState } from "react";
+import { AnyNaptrRecord } from "dns";
 
 export const FormPersonalData = () => {
+
+  /**
+   * Validation using yup. Schema for validation imported from schema folder
+   */
   const {
     register,
     formState: { errors },
@@ -12,6 +18,7 @@ export const FormPersonalData = () => {
     mode: "onBlur",
     resolver: yupResolver(UserSchema),
   });
+ 
   return (
     <Box>
       <Box sx={{ width: "100%", p: 2 }}>

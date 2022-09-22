@@ -1,11 +1,23 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Grid, TextField } from "@mui/material";
-import { useFormContext } from "react-hook-form";
+import { useForm, useFormContext } from "react-hook-form";
+import PaymentSchema from "schemas/paymentSchema";
 
 export const FormPaymentData = () => {
-  const {register} = useFormContext();
+  
+  /**
+   * Validation using yup. Schema for validation imported from schema folder
+   */
+  const {
+    register,
+    formState: { errors },
+  } = useForm({
+    mode: "onBlur",
+    resolver: yupResolver(PaymentSchema),
+  });
 
   return (
-    <form>
+    <Box>
       <Box sx={{ width: "100%", p: 2 }}>
         <TextField
           {...register("ccname")}
@@ -15,6 +27,7 @@ export const FormPaymentData = () => {
           label="Name as it appears on your card"
           name="ccname"
           autoComplete="ccname"
+          helperText={errors?.ccname ? String(errors?.ccname?.message) : ""}
         />
       </Box>
       <Box sx={{ width: "100%", p: 2 }}>
@@ -26,6 +39,9 @@ export const FormPaymentData = () => {
           label="cardNumber"
           name="cardNumber"
           autoComplete="cardNumber"
+          helperText={
+            errors?.cardNumber ? String(errors?.cardNumber?.message) : ""
+          }
         />
       </Box>
       <Box sx={{ width: "100%", p: 2 }}>
@@ -39,21 +55,23 @@ export const FormPaymentData = () => {
               label="Exp MM/YY"
               name="exDate"
               autoComplete="exDate"
+              helperText={errors?.exDate ? String(errors?.exDate?.message) : ""}
             />
           </Grid>
           <Grid xs={4}>
             <TextField
-              {...register("CVV")}
+              {...register("cvv")}
               required
               fullWidth
-              id="CVV"
+              id="cvv"
               label="CVV"
-              name="CVV"
-              autoComplete="CVV"
+              name="cvv"
+              autoComplete="cvv"
+              helperText={errors?.cvv ? String(errors?.cvv?.message) : ""}
             />
           </Grid>
         </Grid>
       </Box>
-    </form>
+    </Box>
   );
 };

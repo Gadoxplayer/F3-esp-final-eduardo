@@ -1,4 +1,4 @@
-import { object, string, number } from "yup";
+import { object, string } from "yup";
 
 const DeliverytSchema = object().shape({
   addressNumber: string().required("You must submit your address").min(5),
@@ -7,7 +7,7 @@ const DeliverytSchema = object().shape({
   province: string()
     .required("You must submit the province for delivery")
     .min(4),
-  postalCode: number()
+  postalCode: string()
     .required("You must submit the postal code of your residence area")
     .min(5),
 });

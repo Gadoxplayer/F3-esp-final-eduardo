@@ -24,6 +24,7 @@ const steps = ["Personal Data", "Delivery Adress", "Payment Infomation"];
 
 export const CheckoutView: FC<props> = ({ title }) => {
   const [activeStep, setActiveStep] = useState(0);
+
   // methods to configurate the forms
   const methods = useForm();
   // methods to configurate the stepper
