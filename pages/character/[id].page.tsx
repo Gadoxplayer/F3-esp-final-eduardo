@@ -23,7 +23,9 @@ export default CharacterId;
 
 export async function getServerSideProps(context: { query: { id: number } }) {
   const { id } = context.query;
-  const res = await fetch(`http://localhost:3000/api/character/${id}`);
+  const res = await fetch(
+    `https://f3-final-project-eduardo.vercel.app/api/character/${id}`
+  );
   const data = await res.json();
   return { props: { data: data } };
 }

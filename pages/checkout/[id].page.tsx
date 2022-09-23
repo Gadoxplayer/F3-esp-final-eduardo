@@ -12,7 +12,7 @@ export default CheckoutComic;
 
 export async function getServerSideProps(context: { query: { id: any } }) {
   const { id } = context.query;
-  const res = await fetch(`http://localhost:3000/api/comic/${id}`);
+  const res = await fetch(`https://f3-final-project-eduardo.vercel.app/api/comic/${id}`);
   const data = await res.json();
   console.log(data);
 
