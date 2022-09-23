@@ -25,7 +25,7 @@ const ComicsDetail: NextPage<props> = ({ data }) => {
           })
           : null}
         stock={data.comic.stock}
-        available={data.comic.characters.available} oldPrice={data.comic.oldPrice} id={data.comic.id}      ></CardDetail>
+        available={data.comic.characters.available} oldPrice={data.comic.oldPrice} id={data.comic.id}      ></CardDetail>   
     </>
   );
 };
@@ -36,7 +36,5 @@ export async function getServerSideProps(context: { query: { id: any } }) {
   const { id } = context.query;
   const res = await fetch(`http://localhost:3000/api/comic/${id}`);
   const data = await res.json();
-  console.log(data);
-
   return { props: { data: data } };
 }

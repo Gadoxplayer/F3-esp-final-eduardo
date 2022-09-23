@@ -35,9 +35,9 @@ export const CardTemplate: FC<props> = ({ title, image, id }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Comprar</Button>
+        <Button size="small">Buy</Button>
         <Link href={`/comics/${id}`}>
-          <Button size="small">Ver detalle</Button>
+          <Button size="small">Details</Button>
         </Link>
       </CardActions>
     </Card>

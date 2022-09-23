@@ -62,12 +62,12 @@ export const CardDetail: FC<props> = ({
         <CardActions>
           <Stack spacing={2}>
             {stock ? (
-              <Link href={`/checkout/${id}`} >
-                <Button size="small">Comprar</Button>
+              <Link href={`/checkout/${id}`}>
+                <Button size="small">Buy now</Button>
               </Link>
             ) : (
               <Button size="small" disabled>
-                Comprar
+                Buy now (not stock available)
               </Button>
             )}
             {description ? (
@@ -108,7 +108,9 @@ export const CardDetail: FC<props> = ({
                   <Typography>Characters</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Typography>{characters}</Typography>
+                  <Link href={`/characters/${id}`}>
+                    <Typography>{characters}</Typography>
+                  </Link>
                 </AccordionDetails>
               </Accordion>
             ) : null}
