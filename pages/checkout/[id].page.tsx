@@ -5,7 +5,7 @@ interface props {
   data: Comic;
 }
 const CheckoutComic: NextPage<props> = ({ data }) => {
-  return <CheckoutView title={data.comic.title} image={data.comic.thumbnail.path + "." + data.comic.thumbnail.extension} price={data.comic.price} />;
+  return <CheckoutView title={data.comic.title} image={data.comic.thumbnail.path + "." + data.comic.thumbnail.extension} price={data.comic.price} id={data.comic.id}/>;
 };
 
 export default CheckoutComic;

@@ -10,6 +10,7 @@ import {
   Stepper,
   Typography,
 } from "@mui/material";
+import Link from "next/link";
 import React from "react";
 import { FC, useState } from "react";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
@@ -23,11 +24,12 @@ type props = {
   title: string;
   image: string;
   price: number;
+  id: number;
 };
 
 const steps = ["Personal Data", "Delivery Adress", "Payment Infomation"];
 
-export const CheckoutView: FC<props> = ({ title, image, price }) => {
+export const CheckoutView: FC<props> = ({ title, image, price, id }) => {
   const [activeStep, setActiveStep] = useState(0);
 
   // methods to configurate the forms
@@ -92,7 +94,11 @@ export const CheckoutView: FC<props> = ({ title, image, price }) => {
                   </Button>
                   <Box sx={{ flex: "1 1 auto" }} />
                   <Button onClick={handleNext} type="submit">
-                    {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                    {activeStep === steps.length - 1 ? (
+                      <Link href={`/confirmation/${id}`}>"Finish"</Link>
+                    ) : (
+                      "Next"
+                    )}
                   </Button>
                 </Box>
               </React.Fragment>
