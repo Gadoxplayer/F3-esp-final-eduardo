@@ -7,10 +7,9 @@ type props = {
   name: string;
   image: string;
   description: string;
-  charId: number;
 };
 
-export const CharacterCard: FC<props> = ({ name, image, description, charId }) => {
+export const CharacterCard: FC<props> = ({ name, image, description }) => {
   return (
     <Box sx={{ p: 4 }}>
       <Card sx={{ maxWidth: 345 }}>
@@ -28,7 +27,6 @@ export const CharacterCard: FC<props> = ({ name, image, description, charId }) =
           <Typography gutterBottom variant="h5" component="div">
             {description}
           </Typography>
-          {charId}
         </CardContent>
       </Card>
     </Box>

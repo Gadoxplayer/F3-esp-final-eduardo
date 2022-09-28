@@ -21,7 +21,7 @@ type props = {
   description: string;
   price: number;
   oldPrice: number;
-  characters: string | string[];
+  characters: any;
   stock: number;
   available: number;
   id: number;
@@ -108,9 +108,7 @@ export const CardDetail: FC<props> = ({
                   <Typography>Characters</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Link href={`/characters/${id}`}>
-                    <Typography>{characters}</Typography>
-                  </Link>
+                  <Typography>{characters}</Typography>
                 </AccordionDetails>
               </Accordion>
             ) : null}
