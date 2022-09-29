@@ -11,31 +11,45 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { FC, useState } from "react";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
-import UserSchema from "schemas/userSchema";
+import UserSchema from "dh-marvel/features/checkout/schemas/userSchema";
 import { FormDeliveryData } from "../formDeliveryData/formDeliveryData";
 import { FormPaymentData } from "../formPaymentData/formPaymentData";
 import { FormPersonalData } from "../formPersonalData/formPersonalData";
 import BodySingle from "../layouts/body/single/body-single";
+import { CheckoutInput } from "dh-marvel/features/checkout/checkout.types";
 
 type props = {
   title: string;
   image: string;
   price: number;
   id: number;
+  checkNext: (data: CheckoutInput) => void;
 };
 
 const steps = ["Personal Data", "Delivery Adress", "Payment Infomation"];
 
-export const CheckoutView: FC<props> = ({ title, image, price, id }) => {
+export const CheckoutView: FC<props> = ({
+  title,
+  image,
+  price,
+  id,
+  checkNext,
+}) => {
   const [activeStep, setActiveStep] = useState(0);
 
   // methods to configurate the forms
-  const methods = useForm();
-  const { getValues } = useForm();
-
+  const methods = useForm({
+    resolver: yupResolver(UserSchema),
+    defaultValues: {
+      name: "Test",
+      lastname: "User",
+      email: "test@user.com",
+    },
+  });
+  const { setFocus, handleSubmit } = methods;
   // methods to configurate the stepper
 
   const handleNext = () => {
@@ -46,10 +60,33 @@ export const CheckoutView: FC<props> = ({ title, image, price, id }) => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const callApiPost = async () => {
+    const category = 1;
+    const sort = "asc";
+    const body = {
+      category,
+      sort,
+    };
+    const response = await fetch("/api/checkout/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+    const data = await response.json();
+  };
+
+  const onSubmit = (data: CheckoutInput) => {
+    console.log(JSON.stringify(data));
+    checkNext(data);
+  };
+
   return (
     <BodySingle title={`Checkout: ${title}`}>
       <FormProvider {...methods}>
-        <form>
+        <form >
           <Box sx={{ width: "100%" }}>
             <Stepper activeStep={activeStep}>
               {steps.map((label, index) => {
@@ -62,33 +99,32 @@ export const CheckoutView: FC<props> = ({ title, image, price, id }) => {
                 );
               })}
             </Stepper>
-    
-              <React.Fragment>
-                <Typography sx={{ mt: 2, mb: 1 }}>
-                  {activeStep === 0 && <FormPersonalData />}
-                  {activeStep === 1 && <FormDeliveryData />}
-                  {activeStep === 2 && <FormPaymentData />}
-                </Typography>
-                <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                  <Button
-                    color="inherit"
-                    disabled={activeStep === 0}
-                    onClick={handleBack}
-                    sx={{ mr: 1 }}
-                  >
-                    Back
-                  </Button>
-                  <Box sx={{ flex: "1 1 auto" }} />
-                  <Button onClick={handleNext} type="submit">
-                    {activeStep === steps.length - 1 ? (
-                      <Link href={`/confirmation/${id}`}>"Finish"</Link>
-                    ) : (
-                      "Next"
-                    )}
-                  </Button>
-                </Box>
-              </React.Fragment>
-         
+
+            <React.Fragment>
+              <Typography sx={{ mt: 2, mb: 1 }}>
+                {activeStep === 0 && <FormPersonalData />}
+                {activeStep === 1 && <FormDeliveryData />}
+                {activeStep === 2 && <FormPaymentData />}
+              </Typography>
+              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                <Button
+                  color="inherit"
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  sx={{ mr: 1 }}
+                >
+                  Back
+                </Button>
+                <Box sx={{ flex: "1 1 auto" }} />
+                <Button onClick={handleNext} type="submit">
+                  {activeStep === steps.length - 1 ? (
+                    <Link href={`/confirmation/${id}`}>"Finish"</Link>
+                  ) : (
+                    "Next"
+                  )}
+                </Button>
+              </Box>
+            </React.Fragment>
           </Box>
         </form>
       </FormProvider>

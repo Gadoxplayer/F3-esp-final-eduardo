@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Grid, TextField } from "@mui/material";
 import { useForm, useFormContext } from "react-hook-form";
-import PaymentSchema from "schemas/paymentSchema";
+import PaymentSchema from "dh-marvel/features/checkout/schemas/paymentSchema";
 import { useEffect, useState } from "react";
 
 export const FormPaymentData = () => {
@@ -14,7 +14,6 @@ export const FormPaymentData = () => {
    * Validation using yup. Schema for validation imported from schema folder
    */
   const {
-    register,
     formState: { errors },
   } = useForm({
     mode: "onBlur",
@@ -26,18 +25,19 @@ export const FormPaymentData = () => {
       cvv: "",
     },
   });
+  const { register } = useFormContext();
   /**
    * handleInputsChange uses useEfect to capture an updated version of the content of the input
    */
-  const handleInputsChange = () => {
-    console.log("ccname:", inputsccname);
-    console.log("cardNumber:", inputscardNumber);
-    console.log("exDate:", inputexDate);
-    console.log("cvv:", inputcvv);
-  };
-  useEffect(() => {
-    handleInputsChange();
-  }, [inputsccname, inputscardNumber, inputexDate, inputcvv]);
+  // const handleInputsChange = () => {
+  //   console.log("ccname:", inputsccname);
+  //   console.log("cardNumber:", inputscardNumber);
+  //   console.log("exDate:", inputexDate);
+  //   console.log("cvv:", inputcvv);
+  // };
+  // useEffect(() => {
+  //   handleInputsChange();
+  // }, [inputsccname, inputscardNumber, inputexDate, inputcvv]);
 
   return (
     <Box>
@@ -51,9 +51,9 @@ export const FormPaymentData = () => {
           name="ccname"
           autoComplete="ccname"
           helperText={errors?.ccname ? String(errors?.ccname?.message) : ""}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setInputsccname(event.target.value);
-          }}
+          // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          //   setInputsccname(event.target.value);
+          // }}
         />
       </Box>
       <Box sx={{ width: "100%", p: 2 }}>
@@ -68,9 +68,9 @@ export const FormPaymentData = () => {
           helperText={
             errors?.cardNumber ? String(errors?.cardNumber?.message) : ""
           }
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setInputscardNumber(event.target.value);
-          }}
+          // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          //   setInputscardNumber(event.target.value);
+          // }}
         />
       </Box>
       <Box sx={{ width: "100%", p: 2 }}>
@@ -85,9 +85,9 @@ export const FormPaymentData = () => {
               name="exDate"
               autoComplete="exDate"
               helperText={errors?.exDate ? String(errors?.exDate?.message) : ""}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                setInputexDate(event.target.value);
-              }}
+              // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              //   setInputexDate(event.target.value);
+              // }}
             />
           </Grid>
           <Grid xs={4}>
@@ -100,9 +100,9 @@ export const FormPaymentData = () => {
               name="cvv"
               autoComplete="cvv"
               helperText={errors?.cvv ? String(errors?.cvv?.message) : ""}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                setInputcvv(event.target.value);
-              }}
+              // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              //   setInputcvv(event.target.value);
+              // }}
             />
           </Grid>
         </Grid>

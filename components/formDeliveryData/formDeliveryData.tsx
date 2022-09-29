@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Grid, TextField } from "@mui/material";
 import { useForm, useFormContext } from "react-hook-form";
-import DeliverytSchema from "schemas/deliverySchema";
+import DeliverytSchema from "dh-marvel/features/checkout/schemas/deliverySchema";
 import { useEffect, useState } from "react";
 
 export const FormDeliveryData = () => {
@@ -15,7 +15,6 @@ export const FormDeliveryData = () => {
    * Validation using yup. Schema for validation imported from schema folder
    */
   const {
-    register,
     formState: { errors },
   } = useForm({
     mode: "onBlur",
@@ -28,25 +27,26 @@ export const FormDeliveryData = () => {
       postalCode: "",
     },
   });
+  const { register } = useFormContext();
   /**
    * handleInputsChange uses useEfect to capture an updated version of the content of the input
    */
-  const handleInputsChange = () => {
-    console.log("addressNumber:", inputsaddressNumber);
-    console.log("typeOfHouse:", inputstypeOfHouse);
-    console.log("city:", inputscity);
-    console.log("province:", inputsprovince);
-    console.log("postalCode:", inputspostalCode);
-  };
-  useEffect(() => {
-    handleInputsChange();
-  }, [
-    inputsaddressNumber,
-    inputstypeOfHouse,
-    inputscity,
-    inputsprovince,
-    inputspostalCode,
-  ]);
+  // const handleInputsChange = () => {
+  //   console.log("addressNumber:", inputsaddressNumber);
+  //   console.log("typeOfHouse:", inputstypeOfHouse);
+  //   console.log("city:", inputscity);
+  //   console.log("province:", inputsprovince);
+  //   console.log("postalCode:", inputspostalCode);
+  // };
+  // useEffect(() => {
+  //   handleInputsChange();
+  // }, [
+  //   inputsaddressNumber,
+  //   inputstypeOfHouse,
+  //   inputscity,
+  //   inputsprovince,
+  //   inputspostalCode,
+  // ]);
 
   return (
     <>
@@ -62,9 +62,9 @@ export const FormDeliveryData = () => {
           helperText={
             errors?.addressNumber ? String(errors?.addressNumber?.message) : ""
           }
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setInputsaddressNumber(event.target.value);
-          }}
+          // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          //   setInputsaddressNumber(event.target.value);
+          // }}
         />
       </Box>
       <Box sx={{ width: "100%", p: 2 }}>
@@ -78,9 +78,9 @@ export const FormDeliveryData = () => {
           helperText={
             errors?.typeOfHouse ? String(errors?.typeOfHouse?.message) : ""
           }
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setInputstypeOfHouse(event.target.value);
-          }}
+          // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          //   setInputstypeOfHouse(event.target.value);
+          // }}
         />
       </Box>
       <Box sx={{ width: "100%", p: 2 }}>
@@ -93,9 +93,9 @@ export const FormDeliveryData = () => {
           name="city"
           autoComplete="city"
           helperText={errors?.city ? String(errors?.city?.message) : ""}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setInputscity(event.target.value);
-          }}
+          // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          //   setInputscity(event.target.value);
+          // }}
         />
       </Box>
       <Box sx={{ width: "100%", p: 2 }}>
@@ -112,9 +112,9 @@ export const FormDeliveryData = () => {
               helperText={
                 errors?.province ? String(errors?.province?.message) : ""
               }
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                setInputsprovince(event.target.value);
-              }}
+              // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              //   setInputsprovince(event.target.value);
+              // }}
             />
           </Grid>
           <Grid xs={4}>
@@ -129,9 +129,9 @@ export const FormDeliveryData = () => {
               helperText={
                 errors?.postalCode ? String(errors?.postalCode?.message) : ""
               }
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                setInputspostalCode(event.target.value);
-              }}
+              // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              //   setInputspostalCode(event.target.value);
+              // }}
             />
           </Grid>
         </Grid>
