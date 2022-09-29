@@ -19,7 +19,6 @@ export const FormPersonalData = () => {
    * Validation using yup. Schema for validation imported from schema folder
    */
   const {
-    register,
     control,
     getValues,
     formState: { errors },
@@ -32,6 +31,8 @@ export const FormPersonalData = () => {
       email: "",
     },
   });
+
+  const { register } = useFormContext();
   /**
    * handleInputsChange uses useEfect to capture an updated version of the content of the input
    */

@@ -46,10 +46,6 @@ export const CheckoutView: FC<props> = ({ title, image, price, id }) => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
-
   return (
     <BodySingle title={`Checkout: ${title}`}>
       <FormProvider {...methods}>
@@ -66,17 +62,7 @@ export const CheckoutView: FC<props> = ({ title, image, price, id }) => {
                 );
               })}
             </Stepper>
-            {activeStep === steps.length ? (
-              <React.Fragment>
-                <Typography sx={{ mt: 2, mb: 1 }}>
-                  All steps completed - you&apos;re finished
-                </Typography>
-                <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                  <Box sx={{ flex: "1 1 auto" }} />
-                  <Button onClick={handleReset}>Reset</Button>
-                </Box>
-              </React.Fragment>
-            ) : (
+    
               <React.Fragment>
                 <Typography sx={{ mt: 2, mb: 1 }}>
                   {activeStep === 0 && <FormPersonalData />}
@@ -102,7 +88,7 @@ export const CheckoutView: FC<props> = ({ title, image, price, id }) => {
                   </Button>
                 </Box>
               </React.Fragment>
-            )}
+         
           </Box>
         </form>
       </FormProvider>
