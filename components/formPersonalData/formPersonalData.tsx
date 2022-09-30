@@ -9,12 +9,17 @@ import {
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import UserSchema from "dh-marvel/features/checkout/schemas/userSchema";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import ControlledInput from "../controlledInput/controlledInput";
 import useOrder from "dh-marvel/features/formContext/useOrder";
 import { PersonalDataType } from "dh-marvel/features/checkout/personalData.type";
+import StepperNavigation from "../stepperNavigator/stepperNavigator";
 
-export const FormPersonalData = () => {
+export type RegisterFormProps = {
+  activeStep: number,
+  handleNext: () => void;
+}
+export const FormPersonalData: FC<RegisterFormProps> = ({activeStep, handleNext}: RegisterFormProps) => {
   const { dispatch } = useOrder();
 
   const methods = useForm<PersonalDataType>({
@@ -35,6 +40,7 @@ export const FormPersonalData = () => {
       type: "SET_CUSTOMER",
       payload: data,
     });
+    handleNext();
   };
 
   useEffect(() => {
@@ -42,22 +48,28 @@ export const FormPersonalData = () => {
   }, []);
 
   return (
-    <Box>
-      <Stack spacing={2}>
-        <FormProvider {...methods}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <ControlledInput name={"name"} label={"Name"} />
-            <ControlledInput name={"lastname"} label={"Last Name"} />
-            <ControlledInput name={"email"} label={"Email"} />
-          </form>
-        </FormProvider>
-        <div>
+    <Box sx={{ m: 2 }}>
+    <Stack spacing={2}>
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <ControlledInput name={"name"} label={"Name"} />
+          <ControlledInput name={"lastname"} label={"Last Name"} />
+          <ControlledInput name={"email"} label={"Email"} />
+        </form>
+      </FormProvider>
+      <StepperNavigation 
+        activeStep={activeStep} 
+        onPrevClick={() => console.log('do nothing') } 
+        onNextClick={handleSubmit(onSubmit) }/>
+      <div>
           <h1>Validate your personal data</h1>
           Name: {name}
+          <br/>
           Last Name: {lastname}
+          <br/>
           Email: {email}
-        </div>
-      </Stack>
+        </div> 
+    </Stack>
     </Box>
   );
 };

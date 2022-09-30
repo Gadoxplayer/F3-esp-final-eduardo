@@ -1,141 +1,90 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Grid, TextField } from "@mui/material";
-import { useForm, useFormContext } from "react-hook-form";
+import { Box, Grid, Stack, TextField } from "@mui/material";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import DeliverytSchema from "dh-marvel/features/checkout/schemas/deliverySchema";
-import { useEffect, useState } from "react";
+import { FC, useEffect } from "react";
+import ControlledInput from "../controlledInput/controlledInput";
+import { DeliveryDataType } from "dh-marvel/features/checkout/deliveryData.types";
+import useOrder from "dh-marvel/features/formContext/useOrder";
+import StepperNavigation from "../stepperNavigator/stepperNavigator";
 
-export const FormDeliveryData = () => {
-  const [inputsaddressNumber, setInputsaddressNumber] = useState<any>();
-  const [inputstypeOfHouse, setInputstypeOfHouse] = useState<any>();
-  const [inputscity, setInputscity] = useState<any>();
-  const [inputsprovince, setInputsprovince] = useState<any>();
-  const [inputspostalCode, setInputspostalCode] = useState<any>();
+export type RegisterFormProps = {
+  activeStep: number;
+  handleNext: () => void;
+  onPrevClick: () => void;
+};
+export const FormDeliveryData: FC<RegisterFormProps> = ({
+  activeStep,
+  handleNext,
+  onPrevClick
+}: RegisterFormProps)  => {
+  const { dispatch } = useOrder();
 
-  /**
-   * Validation using yup. Schema for validation imported from schema folder
-   */
-  const {
-    formState: { errors },
-  } = useForm({
-    mode: "onBlur",
+  const methods = useForm<DeliveryDataType>({
     resolver: yupResolver(DeliverytSchema),
     defaultValues: {
-      addressNumber: "",
-      typeOfHouse: "",
-      city: "",
-      province: "",
-      postalCode: "",
+      address1: "Siempre Viva 123",
+      address2: "AV 45",
+      city: "Buenos Aires",
+      state: "BA",
+      zipCode: "1417",
     },
   });
-  const { register } = useFormContext();
-  /**
-   * handleInputsChange uses useEfect to capture an updated version of the content of the input
-   */
-  // const handleInputsChange = () => {
-  //   console.log("addressNumber:", inputsaddressNumber);
-  //   console.log("typeOfHouse:", inputstypeOfHouse);
-  //   console.log("city:", inputscity);
-  //   console.log("province:", inputsprovince);
-  //   console.log("postalCode:", inputspostalCode);
-  // };
-  // useEffect(() => {
-  //   handleInputsChange();
-  // }, [
-  //   inputsaddressNumber,
-  //   inputstypeOfHouse,
-  //   inputscity,
-  //   inputsprovince,
-  //   inputspostalCode,
-  // ]);
+  const { watch, setFocus, handleSubmit } = methods;
+  const address1 = watch("address1");
+  const address2 = watch("address2");
+  const city = watch("city");
+  const state = watch("state");
+  const zipCode = watch("zipCode");
+
+  const onSubmit = (data: DeliveryDataType) => {
+    dispatch({
+      type: "SET_ADDRESS",
+      payload: data,
+    });
+    handleNext();
+  };
+
+  const handleonPrevClick = () =>{
+    onPrevClick();
+  }
 
   return (
-    <>
-      <Box sx={{ width: "100%", p: 2 }}>
-        <TextField
-          {...register("addressNumber")}
-          required
-          fullWidth
-          id="addressNumber"
-          label="Address Number"
-          name="addressNumber"
-          autoComplete="addressNumber"
-          helperText={
-            errors?.addressNumber ? String(errors?.addressNumber?.message) : ""
-          }
-          // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          //   setInputsaddressNumber(event.target.value);
-          // }}
+    <Box sx={{ m: 2 }}>
+      <Stack spacing={2}>
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <ControlledInput name={"address1"} label={"Address 1"} />
+            <ControlledInput name={"address2"} label={"Address 2"} />
+            <ControlledInput name={"city"} label={"City"} />
+            <Grid container rowSpacing={1}>
+              <Grid xs={4}>
+                <ControlledInput name={"state"} label={"State"} />
+              </Grid>
+              <Grid xs={4}>
+                <ControlledInput name={"zipCode"} label={"Zip Code"} />
+              </Grid>
+            </Grid>
+          </form>
+        </FormProvider>
+        <StepperNavigation
+          activeStep={activeStep}
+          onPrevClick={handleSubmit(handleonPrevClick)}
+          onNextClick={handleSubmit(onSubmit)}
         />
-      </Box>
-      <Box sx={{ width: "100%", p: 2 }}>
-        <TextField
-          {...register("typeOfHouse")}
-          fullWidth
-          id="typeOfHouse"
-          label="Apartment number, floor, etc."
-          name="typeOfHouse"
-          autoComplete="typeOfHouse"
-          helperText={
-            errors?.typeOfHouse ? String(errors?.typeOfHouse?.message) : ""
-          }
-          // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          //   setInputstypeOfHouse(event.target.value);
-          // }}
-        />
-      </Box>
-      <Box sx={{ width: "100%", p: 2 }}>
-        <TextField
-          {...register("city")}
-          required
-          fullWidth
-          id="city"
-          label="City"
-          name="city"
-          autoComplete="city"
-          helperText={errors?.city ? String(errors?.city?.message) : ""}
-          // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          //   setInputscity(event.target.value);
-          // }}
-        />
-      </Box>
-      <Box sx={{ width: "100%", p: 2 }}>
-        <Grid container rowSpacing={1}>
-          <Grid xs={8}>
-            <TextField
-              {...register("province")}
-              required
-              fullWidth
-              id="province"
-              label="Province"
-              name="province"
-              autoComplete="province"
-              helperText={
-                errors?.province ? String(errors?.province?.message) : ""
-              }
-              // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              //   setInputsprovince(event.target.value);
-              // }}
-            />
-          </Grid>
-          <Grid xs={4}>
-            <TextField
-              {...register("postalCode")}
-              required
-              fullWidth
-              id="postalCode"
-              label="Postal Code"
-              name="postalCode"
-              autoComplete="postalCode"
-              helperText={
-                errors?.postalCode ? String(errors?.postalCode?.message) : ""
-              }
-              // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              //   setInputspostalCode(event.target.value);
-              // }}
-            />
-          </Grid>
-        </Grid>
-      </Box>
-    </>
+        <div>
+          <h1>Validate your delivery data</h1>
+          Address 1: {address1}
+          <br />
+          Address 2: {address2}
+          <br />
+          City: {city}
+          <br />
+          State: {state}
+          <br />
+          Zip Code: {zipCode}
+        </div>
+      </Stack>
+    </Box>
   );
 };

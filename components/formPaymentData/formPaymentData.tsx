@@ -1,112 +1,107 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Grid, TextField } from "@mui/material";
-import { useForm, useFormContext } from "react-hook-form";
+import { Box, Grid, Stack, TextField } from "@mui/material";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import PaymentSchema from "dh-marvel/features/checkout/schemas/paymentSchema";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
+import useOrder from "dh-marvel/features/formContext/useOrder";
+import { PaymentDataType } from "dh-marvel/features/checkout/paymentData.type";
+import ControlledInput from "../controlledInput/controlledInput";
+import StepperNavigation from "../stepperNavigator/stepperNavigator";
+import { postForm } from "dh-marvel/features/checkout/postForm";
 
-export const FormPaymentData = () => {
-  const [inputsccname, setInputsccname] = useState<any>();
-  const [inputscardNumber, setInputscardNumber] = useState<any>();
-  const [inputexDate, setInputexDate] = useState<any>();
-  const [inputcvv, setInputcvv] = useState<any>();
+export type RegisterFormProps = {
+  activeStep: number;
+  handleNext: () => void;
+  onPrevClick: () => void;
+};
+export const FormPaymentData: FC<RegisterFormProps> = ({
+  activeStep,
+  handleNext,
+  onPrevClick
+}: RegisterFormProps)   => {
+  const { dispatch, state } = useOrder();
 
-  /**
-   * Validation using yup. Schema for validation imported from schema folder
-   */
-  const {
-    formState: { errors },
-  } = useForm({
-    mode: "onBlur",
+  const methods = useForm<PaymentDataType>({
     resolver: yupResolver(PaymentSchema),
     defaultValues: {
-      ccname: "",
-      cardNumber: "",
-      exDate: "",
-      cvv: "",
+      number: "42424242 4242 4242",
+      cvc: "123",
+      expDate: "02/28",
+      nameOnCard: "TEST USER",
     },
   });
-  const { register } = useFormContext();
-  /**
-   * handleInputsChange uses useEfect to capture an updated version of the content of the input
-   */
-  // const handleInputsChange = () => {
-  //   console.log("ccname:", inputsccname);
-  //   console.log("cardNumber:", inputscardNumber);
-  //   console.log("exDate:", inputexDate);
-  //   console.log("cvv:", inputcvv);
-  // };
-  // useEffect(() => {
-  //   handleInputsChange();
-  // }, [inputsccname, inputscardNumber, inputexDate, inputcvv]);
+  const { watch, setFocus, handleSubmit } = methods;
+  const number = watch("number");
+  const cvc = watch("cvc");
+  const expDate = watch("expDate");
+  const nameOnCard = watch("nameOnCard");
+
+  const onSubmit = (data: PaymentDataType) => {
+    dispatch({
+      type: "SET_CARD",
+      payload: data,
+    });
+    postForm({...state.order, card: data})
+    handleNext();
+  };
+
+  useEffect(() => {
+    setFocus("nameOnCard");
+  }, []);
+
+  const handleonPrevClick = () =>{
+    onPrevClick();
+  }
 
   return (
-    <Box>
-      <Box sx={{ width: "100%", p: 2 }}>
-        <TextField
-          {...register("ccname")}
-          required
-          fullWidth
-          id="ccname"
-          label="Name as it appears on your card"
-          name="ccname"
-          autoComplete="ccname"
-          helperText={errors?.ccname ? String(errors?.ccname?.message) : ""}
-          // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          //   setInputsccname(event.target.value);
-          // }}
-        />
-      </Box>
-      <Box sx={{ width: "100%", p: 2 }}>
-        <TextField
-          {...register("cardNumber")}
-          required
-          fullWidth
-          id="cardNumber"
-          label="cardNumber"
-          name="cardNumber"
-          autoComplete="cardNumber"
-          helperText={
-            errors?.cardNumber ? String(errors?.cardNumber?.message) : ""
-          }
-          // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          //   setInputscardNumber(event.target.value);
-          // }}
-        />
-      </Box>
-      <Box sx={{ width: "100%", p: 2 }}>
-        <Grid container rowSpacing={1}>
-          <Grid xs={4}>
-            <TextField
-              {...register("exDate")}
-              required
-              fullWidth
-              id="exDate"
-              label="Exp MM/YY"
-              name="exDate"
-              autoComplete="exDate"
-              helperText={errors?.exDate ? String(errors?.exDate?.message) : ""}
-              // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              //   setInputexDate(event.target.value);
-              // }}
-            />
+    <Box sx={{ m: 2 }}>
+    <Stack spacing={2}>
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <ControlledInput name={"nameOnCard"} label={"Name On Card"} />
+          <ControlledInput name={"number"} label={"Number"} />
+          <Grid container rowSpacing={1}>
+            <Grid xs={4}>
+              <ControlledInput name={"expDate"} label={"Expedition Date"} />
+            </Grid>
+            <Grid xs={4}>
+              <ControlledInput name={"cvc"} label={"CVC"} />
+            </Grid>
           </Grid>
-          <Grid xs={4}>
-            <TextField
-              {...register("cvv")}
-              required
-              fullWidth
-              id="cvv"
-              label="CVV"
-              name="cvv"
-              autoComplete="cvv"
-              helperText={errors?.cvv ? String(errors?.cvv?.message) : ""}
-              // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              //   setInputcvv(event.target.value);
-              // }}
-            />
-          </Grid>
-        </Grid>
-      </Box>
+        </form>
+      </FormProvider>
+      <StepperNavigation
+          activeStep={activeStep}
+          onPrevClick={handleSubmit(handleonPrevClick)}
+          onNextClick={handleSubmit(onSubmit)}
+        />
+      <div>
+        <h1>Validate your payment data</h1>
+        Name: {nameOnCard}
+        <br />
+        Number: {number}
+        <br />
+        Expiration date: {expDate}
+        <br />
+        CVC: {cvc}
+      </div>
+    </Stack>
     </Box>
   );
 };
+
+{
+  /* <TextField
+{...register("ccname")}
+required
+fullWidth
+id="ccname"
+label="Name as it appears on your card"
+name="ccname"
+autoComplete="ccname"
+helperText={errors?.ccname ? String(errors?.ccname?.message) : ""}
+// onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+//   setInputsccname(event.target.value);
+// }}
+/> */
+}

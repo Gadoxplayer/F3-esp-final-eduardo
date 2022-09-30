@@ -26,30 +26,15 @@ type props = {
   image: string;
   price: number;
   id: number;
-  checkNext: (data: CheckoutInput) => void;
 };
 
 const steps = ["Personal Data", "Delivery Adress", "Payment Infomation"];
 
-export const CheckoutView: FC<props> = ({
-  title,
-  image,
-  price,
-  id,
-  checkNext,
-}) => {
+export const CheckoutView: FC<props> = ({ title, image, price, id }) => {
   const [activeStep, setActiveStep] = useState(0);
 
   // methods to configurate the forms
-  const methods = useForm({
-    resolver: yupResolver(UserSchema),
-    defaultValues: {
-      name: "Test",
-      lastname: "User",
-      email: "test@user.com",
-    },
-  });
-  const { setFocus, handleSubmit } = methods;
+  const methods = useForm();
   // methods to configurate the stepper
 
   const handleNext = () => {
@@ -60,74 +45,59 @@ export const CheckoutView: FC<props> = ({
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const callApiPost = async () => {
-    const category = 1;
-    const sort = "asc";
-    const body = {
-      category,
-      sort,
-    };
-    const response = await fetch("/api/checkout/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-    const data = await response.json();
-  };
-
-  const onSubmit = (data: CheckoutInput) => {
-    console.log(JSON.stringify(data));
-    checkNext(data);
-  };
-
   return (
     <BodySingle title={`Checkout: ${title}`}>
-      <FormProvider {...methods}>
-        <form >
-          <Box sx={{ width: "100%" }}>
-            <Stepper activeStep={activeStep}>
-              {steps.map((label, index) => {
-                const stepProps: { completed?: boolean } = {};
+      <Box sx={{ width: "100%" }}>
+        <Stepper activeStep={activeStep}>
+          {steps.map((label, index) => {
+            const stepProps: { completed?: boolean } = {};
 
-                return (
-                  <Step key={label} {...stepProps}>
-                    <StepLabel>{label}</StepLabel>
-                  </Step>
-                );
-              })}
-            </Stepper>
+            return (
+              <Step key={label} {...stepProps}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            );
+          })}
+        </Stepper>
 
-            <React.Fragment>
-              <Typography sx={{ mt: 2, mb: 1 }}>
-                {activeStep === 0 && <FormPersonalData />}
-                {activeStep === 1 && <FormDeliveryData />}
-                {activeStep === 2 && <FormPaymentData />}
-              </Typography>
-              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                <Button
-                  color="inherit"
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  sx={{ mr: 1 }}
-                >
-                  Back
-                </Button>
-                <Box sx={{ flex: "1 1 auto" }} />
-                <Button onClick={handleNext} type="submit">
-                  {activeStep === steps.length - 1 ? (
-                    <Link href={`/confirmation/${id}`}>"Finish"</Link>
-                  ) : (
-                    "Next"
-                  )}
-                </Button>
-              </Box>
-            </React.Fragment>
-          </Box>
-        </form>
-      </FormProvider>
+        <React.Fragment>
+          {activeStep === 0 && (
+            <FormPersonalData activeStep={activeStep} handleNext={handleNext} />
+          )}
+          {activeStep === 1 && (
+            <FormDeliveryData
+              activeStep={activeStep}
+              handleNext={handleNext}
+              onPrevClick={handleBack}
+            />
+          )}
+          {activeStep === 2 && (
+            <FormPaymentData
+              activeStep={activeStep}
+              handleNext={handleNext}
+              onPrevClick={handleBack}
+            />
+          )}
+          {/* <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+            <Button
+              color="inherit"
+              disabled={activeStep === 0}
+              onClick={handleBack}
+              sx={{ mr: 1 }}
+            >
+              Back
+            </Button>
+            <Box sx={{ flex: "1 1 auto" }} />
+            <Button onClick={handleNext} type="submit">
+              {activeStep === steps.length - 1 ? (
+                <Link href={`/confirmation/${id}`}>"Finish"</Link>
+              ) : (
+                "Next"
+              )}
+            </Button>
+          </Box> */}
+        </React.Fragment>
+      </Box>
       <Card sx={{ maxWidth: 345, alignSelf: "center" }}>
         <CardMedia
           component="img"

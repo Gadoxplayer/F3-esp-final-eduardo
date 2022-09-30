@@ -5,9 +5,8 @@ import { PaymentDataType } from "../checkout/paymentData.type";
 import { PersonalDataType } from "../checkout/personalData.type";
 
 export type Order = {
-  customer: PersonalDataType;
+  customer: PersonalDataType & DeliveryDataType;
   card: PaymentDataType;
-  address: DeliveryDataType;
 };
 
 export interface OrderState {
@@ -32,13 +31,13 @@ type OrderSetCardType = {
   payload: PaymentDataType;
 };
 
-type OrderSetStringType = {
-  type: "SET_CUSTOMER_AND_ADVANCE";
-  payload: {
-    activeStep: number;
-    customer: {};
-  };
-};
+// type OrderSetStringType = {
+//   type: "SET_CUSTOMER_AND_ADVANCE";
+//   payload: {
+//     activeStep: number;
+//     customer: {};
+//   };
+// };
 
 type OrderSetAddressType = {
   type: "SET_ADDRESS";
@@ -48,8 +47,7 @@ type OrderSetAddressType = {
 type OrderActionType =
   | OrderSetCustomerType
   | OrderSetCardType
-  | OrderSetAddressType
-  | OrderSetStringType;
+  | OrderSetAddressType;
 
 export const reducer = (state: OrderState, action: OrderActionType) => {
   switch (action.type) {
@@ -74,7 +72,7 @@ export const reducer = (state: OrderState, action: OrderActionType) => {
         ...state,
         order: {
           ...state.order,
-          card: action.payload,
+          customer: { ...state.order.customer, address: action.payload },
         },
       };
     default:
@@ -84,9 +82,8 @@ export const reducer = (state: OrderState, action: OrderActionType) => {
 
 const initialState: OrderState = {
   order: {
-    customer: {} as PersonalDataType,
+    customer: {} as PersonalDataType & DeliveryDataType,
     card: {} as PaymentDataType,
-    address: {} as DeliveryDataType,
   },
 };
 

@@ -27,7 +27,7 @@ const ControlledInput: FC<ControlledTextInputProps> = ({
   return (
     <Box mb={2}>
       <TextField
-        {...register(`${name}`)}
+        {...register(name)}
         onChange={onChange}
         value={value}
         label={label}

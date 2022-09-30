@@ -58,5 +58,5 @@ export type Comic = {
   };
   price: number;
   oldPrice: number;
-  
+  stock: number;
 };
