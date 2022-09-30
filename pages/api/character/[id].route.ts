@@ -6,7 +6,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 
 /**
- * No 
+ * No using it anymore, ill keept it to have a template for the future
  */
 
 
