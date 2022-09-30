@@ -56,4 +56,7 @@ export type Comic = {
     items: [];
     returned: number;
   };
+  price: number;
+  oldPrice: number;
+  
 };
