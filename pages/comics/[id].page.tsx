@@ -2,6 +2,7 @@ import { Divider } from "@mui/material";
 import { Box } from "@mui/system";
 import { CardDetail } from "dh-marvel/components/carDetail/cardDetail";
 import { Comic } from "dh-marvel/features/types";
+import { getComic } from "dh-marvel/services/marvel/marvel.service";
 import { NextPage } from "next";
 import Link from "next/link";
 
@@ -18,13 +19,13 @@ const ComicsDetail: NextPage<props> = ({ data }) => {
   return (
     <>
       <CardDetail
-        title={data.comic.title}
-        image={data.comic.thumbnail.path + "." + data.comic.thumbnail.extension}
-        description={data.comic.description}
-        price={data.comic.price}
+        title={data.title}
+        image={data.thumbnail.path + "." + data.thumbnail.extension}
+        description={data.description}
+        price={data.price}
         characters={
-          data.comic.characters.available
-            ? data.comic.characters.items.map((charac: any) => {
+          data.characters.available
+            ? data.characters.items.map((charac: any) => {
                 return (
                   <Divider>
                     <Box sx={{ p: 1 }}>
@@ -40,10 +41,10 @@ const ComicsDetail: NextPage<props> = ({ data }) => {
               })
             : null
         }
-        stock={data.comic.stock}
-        available={data.comic.characters.available}
-        oldPrice={data.comic.oldPrice}
-        id={data.comic.id}
+        stock={data.stock}
+        available={data.characters.available}
+        oldPrice={data.oldPrice}
+        id={data.id}
       ></CardDetail>
     </>
   );
@@ -53,7 +54,9 @@ export default ComicsDetail;
 
 export async function getServerSideProps(context: { query: { id: any } }) {
   const { id } = context.query;
-  const res = await fetch(`http://localhost:3000/api/comic/${id}`);
-  const data = await res.json();
-  return { props: { data: data } };
+  const res = await getComic(id);
+
+  console.log(res);
+
+  return { props: { data: res } };
 }

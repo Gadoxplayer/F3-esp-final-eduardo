@@ -77,7 +77,7 @@ const Index: NextPage<props> = ({ comics, pages }) => {
           onChange={handleChange}
         />
         {isLoading ? (
-          <Box sx={{ display: "flex" }}>
+          <Box sx={{ textAlign: "center" }}>
             <CircularProgress />
           </Box>
         ) : (

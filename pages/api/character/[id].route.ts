@@ -3,6 +3,13 @@ import {
 } from "dh-marvel/services/marvel/marvel.service";
 import type { NextApiRequest, NextApiResponse } from "next";
 
+
+
+/**
+ * No 
+ */
+
+
 /**
  * handleDetails is a handler for the route, which fetches data of a specific comic
  * @param req
