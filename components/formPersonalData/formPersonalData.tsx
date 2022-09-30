@@ -19,7 +19,7 @@ export type RegisterFormProps = {
   activeStep: number,
   handleNext: () => void;
 }
-export const FormPersonalData: FC<RegisterFormProps> = ({activeStep, handleNext}: RegisterFormProps) => {
+export const FormPersonalData: FC<RegisterFormProps> = ({ activeStep, handleNext}: RegisterFormProps) => {
   const { dispatch } = useOrder();
 
   const methods = useForm<PersonalDataType>({
@@ -36,6 +36,8 @@ export const FormPersonalData: FC<RegisterFormProps> = ({activeStep, handleNext}
   const lastname = watch("lastname");
 
   const onSubmit = (data: PersonalDataType) => {
+    console.log("entro al onsubmit del primer form");
+    
     dispatch({
       type: "SET_CUSTOMER",
       payload: data,

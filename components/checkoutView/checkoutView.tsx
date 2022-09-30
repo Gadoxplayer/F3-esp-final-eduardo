@@ -62,7 +62,7 @@ export const CheckoutView: FC<props> = ({ title, image, price, id }) => {
 
         <React.Fragment>
           {activeStep === 0 && (
-            <FormPersonalData activeStep={activeStep} handleNext={handleNext} />
+            <FormPersonalData handleNext={handleNext} activeStep={activeStep} />
           )}
           {activeStep === 1 && (
             <FormDeliveryData
@@ -78,24 +78,6 @@ export const CheckoutView: FC<props> = ({ title, image, price, id }) => {
               onPrevClick={handleBack}
             />
           )}
-          {/* <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-            <Button
-              color="inherit"
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              sx={{ mr: 1 }}
-            >
-              Back
-            </Button>
-            <Box sx={{ flex: "1 1 auto" }} />
-            <Button onClick={handleNext} type="submit">
-              {activeStep === steps.length - 1 ? (
-                <Link href={`/confirmation/${id}`}>"Finish"</Link>
-              ) : (
-                "Next"
-              )}
-            </Button>
-          </Box> */}
         </React.Fragment>
       </Box>
       <Card sx={{ maxWidth: 345, alignSelf: "center" }}>
