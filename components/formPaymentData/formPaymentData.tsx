@@ -14,13 +14,13 @@ export type RegisterFormProps = {
   activeStep: number;
   handleNext: () => void;
   onPrevClick: () => void;
-  id: any;
+  idSnackbar: any;
 };
 export const FormPaymentData: FC<RegisterFormProps> = ({
   activeStep,
   handleNext,
   onPrevClick,
-  id,
+  idSnackbar,
 }: RegisterFormProps) => {
   const { dispatch, state } = useOrder();
   const router = useRouter();
@@ -61,13 +61,13 @@ export const FormPaymentData: FC<RegisterFormProps> = ({
       setOpenSnackbar(true);
     }
     if (infoSnackbar?.data) {
-      const handledData = { inital: infoSnackbar.data, comic: id };
+      const handledData = { inital: infoSnackbar.data, data: idSnackbar };
       router.push(
         {
-          pathname: "/confirmation",
+          pathname: `/confirmation/${idSnackbar}`,
           query: { data: JSON.stringify(handledData) },
         },
-        "/confirmation"
+        `/confirmation/${idSnackbar}`
       );
     }
   }, [infoSnackbar]);

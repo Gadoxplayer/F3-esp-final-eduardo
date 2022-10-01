@@ -22,16 +22,23 @@ import BodySingle from "../layouts/body/single/body-single";
 import { CheckoutInput } from "dh-marvel/features/checkout/checkout.types";
 import { useRouter } from "next/router";
 
-type props = {
+export type props = {
   title: string;
   image: string;
   price: number;
   id: number;
+  idSnackbar: any;
 };
 
 const steps = ["Personal Data", "Delivery Adress", "Payment Infomation"];
 
-export const CheckoutView: FC<props> = ({ title, image, price, id }) => {
+export const CheckoutView: FC<props> = ({
+  title,
+  image,
+  price,
+  id,
+  idSnackbar,
+}) => {
   const [activeStep, setActiveStep] = useState(0);
 
   //methods to configurate the route to a succesful purchase or the api erros
@@ -52,7 +59,7 @@ export const CheckoutView: FC<props> = ({ title, image, price, id }) => {
     router.push(`/confirmation/${id}`);
     console.log("a la ruta");
   };
-  
+
   return (
     <BodySingle title={`Checkout: ${title}`}>
       <Box sx={{ width: "100%" }}>
@@ -86,6 +93,7 @@ export const CheckoutView: FC<props> = ({ title, image, price, id }) => {
                 handlefinal(id);
               }}
               onPrevClick={handleBack}
+              idSnackbar={idSnackbar}
             />
           )}
         </React.Fragment>

@@ -14,7 +14,7 @@ interface props {
 /**
  * Route to display the form to buy a selected comic
  * @param data data fetched from the api
- * @returns a component which renders details of a comic and a form 
+ * @returns a component which renders details of a comic and a form
  * @author Eduardo C
  */
 const CheckoutComic: NextPage<props> = ({ data }) => {
@@ -23,13 +23,13 @@ const CheckoutComic: NextPage<props> = ({ data }) => {
   }
 
   return (
-      <CheckoutView
-        title={data.title}
-        image={data.thumbnail.path + "." + data.thumbnail.extension}
-        price={data.price}
-        id={data.id}
-      />
-
+    <CheckoutView
+      title={data.title}
+      image={data.thumbnail.path + "." + data.thumbnail.extension}
+      price={data.price}
+      id={data.id}
+      idSnackbar={data}
+    />
   );
 };
 
