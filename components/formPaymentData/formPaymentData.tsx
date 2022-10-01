@@ -60,11 +60,11 @@ export const FormPaymentData: FC<RegisterFormProps> = ({
         <form onSubmit={handleSubmit(onSubmit)}>
           <ControlledInput name={"nameOnCard"} label={"Name On Card"} />
           <ControlledInput name={"number"} label={"Number"} />
-          <Grid container rowSpacing={1}>
-            <Grid xs={4}>
+          <Grid container spacing={2}>
+            <Grid item>
               <ControlledInput name={"expDate"} label={"Expedition Date"} />
             </Grid>
-            <Grid xs={4}>
+            <Grid item>
               <ControlledInput name={"cvc"} label={"CVC"} />
             </Grid>
           </Grid>

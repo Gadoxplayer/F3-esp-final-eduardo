@@ -34,8 +34,8 @@ export const PurchaseConfirm: FC<props> = ({
   state,
 }) => {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <Grid spacing={2}>
+    <Box sx={{ justifyContent: "center" }}>
+      <Grid >
         <Card sx={{ maxWidth: 345, alignSelf: "center", p: 2 }}>
           <CardMedia
             component="img"

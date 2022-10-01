@@ -16,8 +16,8 @@ export type RegisterFormProps = {
 export const FormDeliveryData: FC<RegisterFormProps> = ({
   activeStep,
   handleNext,
-  onPrevClick
-}: RegisterFormProps)  => {
+  onPrevClick,
+}: RegisterFormProps) => {
   const { dispatch } = useOrder();
 
   const methods = useForm<DeliveryDataType>({
@@ -45,9 +45,9 @@ export const FormDeliveryData: FC<RegisterFormProps> = ({
     handleNext();
   };
 
-  const handleonPrevClick = () =>{
+  const handleonPrevClick = () => {
     onPrevClick();
-  }
+  };
 
   return (
     <Box sx={{ m: 2 }}>
@@ -57,11 +57,11 @@ export const FormDeliveryData: FC<RegisterFormProps> = ({
             <ControlledInput name={"address1"} label={"Address 1"} />
             <ControlledInput name={"address2"} label={"Address 2"} />
             <ControlledInput name={"city"} label={"City"} />
-            <Grid container rowSpacing={1}>
-              <Grid xs={4}>
+            <Grid container spacing={2}>
+              <Grid item>
                 <ControlledInput name={"state"} label={"State"} />
               </Grid>
-              <Grid xs={4}>
+              <Grid item>
                 <ControlledInput name={"zipCode"} label={"Zip Code"} />
               </Grid>
             </Grid>

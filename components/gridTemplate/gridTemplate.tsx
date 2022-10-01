@@ -12,7 +12,7 @@ export const GridTemplate: FC<props> = ({ comics }) => {
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
         {comics?.map((comic, index) => (
-          <Grid xs={12} sm={4} md={4} key={index} p={2}>
+          <Grid item xs={12} sm={4} md={4} key={index} p={2}>
             <CardTemplate
               title={comic.title}
               id={comic.id}

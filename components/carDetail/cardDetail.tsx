@@ -108,7 +108,12 @@ export const CardDetail: FC<props> = ({
                   <Typography>Characters</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Typography>{characters}</Typography>
+                  {/* <>{characters}</> */}
+                  {characters.map((char: any, index: any)=>{
+                    return (
+                      <Box key={index}>{char}</Box>
+                    )
+                  })}
                 </AccordionDetails>
               </Accordion>
             ) : null}
