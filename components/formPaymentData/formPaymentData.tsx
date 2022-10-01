@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Grid, Stack, TextField } from "@mui/material";
+import { Alert, Box, Grid, Snackbar, Stack, TextField } from "@mui/material";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import PaymentSchema from "dh-marvel/features/checkout/schemas/paymentSchema";
 import { FC, useEffect, useState } from "react";
@@ -8,19 +8,27 @@ import { PaymentDataType } from "dh-marvel/features/checkout/paymentData.type";
 import ControlledInput from "../controlledInput/controlledInput";
 import StepperNavigation from "../stepperNavigator/stepperNavigator";
 import { postForm } from "dh-marvel/features/checkout/postForm";
+import { useRouter } from "next/router";
 
 export type RegisterFormProps = {
   activeStep: number;
   handleNext: () => void;
   onPrevClick: () => void;
+  id: any;
 };
 export const FormPaymentData: FC<RegisterFormProps> = ({
   activeStep,
   handleNext,
-  onPrevClick
-}: RegisterFormProps)   => {
+  onPrevClick,
+  id,
+}: RegisterFormProps) => {
   const { dispatch, state } = useOrder();
-
+  const router = useRouter();
+  //Snackbar
+  const [openSnackbar, setOpenSnackbar] = useState<any>(false);
+  const [messageSnackbar, setMessageSnackbar] = useState<any>("");
+  const [infoSnackbar, setInfoSnackbar] = useState<any>();
+  //
   const methods = useForm<PaymentDataType>({
     resolver: yupResolver(PaymentSchema),
     defaultValues: {
@@ -41,51 +49,102 @@ export const FormPaymentData: FC<RegisterFormProps> = ({
       type: "SET_CARD",
       payload: data,
     });
-    postForm({...state.order, card: data})
+    postForm({ ...state.order, card: data }).then((data) =>
+      setInfoSnackbar(data)
+    );
     handleNext();
   };
 
   useEffect(() => {
-    setFocus("nameOnCard");
+    if (infoSnackbar?.error) {
+      setMessageSnackbar(infoSnackbar?.message);
+      setOpenSnackbar(true);
+    }
+    if (infoSnackbar?.data) {
+      const handledData = { inital: infoSnackbar.data, comic: id };
+      router.push(
+        {
+          pathname: "/confirmation",
+          query: { data: JSON.stringify(handledData) },
+        },
+        "/confirmation"
+      );
+    }
+  }, [infoSnackbar]);
+
+  const handleonPrevClick = () => {
+    onPrevClick();
+  };
+
+  useEffect(() => {
+    setFocus("number");
   }, []);
 
-  const handleonPrevClick = () =>{
-    onPrevClick();
-  }
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
 
   return (
     <Box sx={{ m: 2 }}>
-    <Stack spacing={2}>
-      <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <ControlledInput name={"nameOnCard"} label={"Name On Card"} />
-          <ControlledInput name={"number"} label={"Number"} />
-          <Grid container spacing={2}>
-            <Grid item>
-              <ControlledInput name={"expDate"} label={"Expedition Date"} />
+      <Stack spacing={2}>
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={6000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+            {messageSnackbar}
+          </Alert>
+        </Snackbar>
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={6000}
+          onClose={handleClose}
+        >
+          <Alert
+            onClose={handleClose}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            {messageSnackbar}
+          </Alert>
+        </Snackbar>
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <ControlledInput name={"nameOnCard"} label={"Name On Card"} />
+            <ControlledInput name={"number"} label={"Number"} />
+            <Grid container spacing={2}>
+              <Grid item>
+                <ControlledInput name={"expDate"} label={"Expedition Date"} />
+              </Grid>
+              <Grid item>
+                <ControlledInput name={"cvc"} label={"CVC"} />
+              </Grid>
             </Grid>
-            <Grid item>
-              <ControlledInput name={"cvc"} label={"CVC"} />
-            </Grid>
-          </Grid>
-        </form>
-      </FormProvider>
-      <StepperNavigation
+          </form>
+        </FormProvider>
+        <StepperNavigation
           activeStep={activeStep}
           onPrevClick={handleSubmit(handleonPrevClick)}
           onNextClick={handleSubmit(onSubmit)}
         />
-      <div>
-        <h1>Validate your payment data</h1>
-        Name: {nameOnCard}
-        <br />
-        Number: {number}
-        <br />
-        Expiration date: {expDate}
-        <br />
-        CVC: {cvc}
-      </div>
-    </Stack>
+        <div>
+          <h1>Validate your payment data</h1>
+          Name: {nameOnCard}
+          <br />
+          Number: {number}
+          <br />
+          Expiration date: {expDate}
+          <br />
+          CVC: {cvc}
+        </div>
+      </Stack>
     </Box>
   );
 };
