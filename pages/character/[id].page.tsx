@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Divider, Link } from "@mui/material";
 import { CharacterCard } from "dh-marvel/components/characterCard/characterCard";
 import { getCharacter } from "dh-marvel/services/marvel/marvel.service";
 import { NextPage } from "next";
@@ -10,6 +10,21 @@ const CharacterId: NextPage = ({ data }: any) => {
         image={data.thumbnail.path + "." + data.thumbnail.extension}
         name={data.name}
         description={data.description}
+        comics={data.comics.items.map((com: any) => {
+          return (
+            <Divider>
+              <Box sx={{ p: 1 }}>
+                <Link
+                  key={com.name}
+                  href={`/comics/${com.resourceURI.substr(43)}`}
+                >
+                  {com.name}
+                </Link>
+              </Box>
+            </Divider>
+          );
+        })}
+        id={data.id}
       />
     </Box>
   );
