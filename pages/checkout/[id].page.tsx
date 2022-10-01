@@ -23,14 +23,13 @@ const CheckoutComic: NextPage<props> = ({ data }) => {
   }
 
   return (
-    <OrderProvider>
       <CheckoutView
         title={data.title}
         image={data.thumbnail.path + "." + data.thumbnail.extension}
         price={data.price}
         id={data.id}
       />
-    </OrderProvider>
+
   );
 };
 

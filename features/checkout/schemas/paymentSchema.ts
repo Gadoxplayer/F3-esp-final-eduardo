@@ -8,7 +8,7 @@ const PaymentSchema = object().shape({
   expDate: string()
     .required("You must submit the expiration date of your card")
     .min(5),
-  cvv: string()
+  cvc: string()
     .required("You must submit the CVV number at the back of your card")
     .max(3),
 });

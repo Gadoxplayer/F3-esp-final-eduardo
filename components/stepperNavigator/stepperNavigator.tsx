@@ -14,10 +14,22 @@ const StepperNavigation: FC<StepperNavigationProps> = ({
 }: StepperNavigationProps) => {
   return (
     <Stack direction="row" mt={2}>
-      {activeStep !== 0 && <Button onClick={onPrevClick}>Back!</Button>}
+      {/* {activeStep !== 0 && <Button onClick={onPrevClick}>Back!</Button>}
       <Box sx={{ flex: "1 1 auto" }} />
       <Button onClick={onNextClick}>
         {activeStep === 1 ? "End" : "Next!"}
+      </Button> */}
+      <Button
+        color="inherit"
+        disabled={activeStep === 0}
+        onClick={onPrevClick}
+        sx={{ mr: 1 }}
+      >
+        Back
+      </Button>
+
+      <Button onClick={onNextClick} type="submit">
+        {activeStep === 2 ? "Finish" : "Next"}
       </Button>
     </Stack>
   );

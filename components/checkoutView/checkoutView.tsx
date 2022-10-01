@@ -20,6 +20,7 @@ import { FormPaymentData } from "../formPaymentData/formPaymentData";
 import { FormPersonalData } from "../formPersonalData/formPersonalData";
 import BodySingle from "../layouts/body/single/body-single";
 import { CheckoutInput } from "dh-marvel/features/checkout/checkout.types";
+import { useRouter } from "next/router";
 
 type props = {
   title: string;
@@ -33,6 +34,8 @@ const steps = ["Personal Data", "Delivery Adress", "Payment Infomation"];
 export const CheckoutView: FC<props> = ({ title, image, price, id }) => {
   const [activeStep, setActiveStep] = useState(0);
 
+  //methods to configurate the route to a succesful purchase or the api erros
+  const router = useRouter();
   // methods to configurate the forms
   const methods = useForm();
   // methods to configurate the stepper
@@ -45,6 +48,11 @@ export const CheckoutView: FC<props> = ({ title, image, price, id }) => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const handlefinal = (id: any) => {
+    router.push(`/confirmation/${id}`);
+    console.log("a la ruta");
+  };
+  
   return (
     <BodySingle title={`Checkout: ${title}`}>
       <Box sx={{ width: "100%" }}>
@@ -74,7 +82,9 @@ export const CheckoutView: FC<props> = ({ title, image, price, id }) => {
           {activeStep === 2 && (
             <FormPaymentData
               activeStep={activeStep}
-              handleNext={handleNext}
+              handleNext={() => {
+                handlefinal(id);
+              }}
               onPrevClick={handleBack}
             />
           )}

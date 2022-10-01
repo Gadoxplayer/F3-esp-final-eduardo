@@ -13,21 +13,25 @@ import { FC } from "react";
 type props = {
   title: string;
   name: string;
+  lastname: string;
   email: string;
-  address: string;
+  address1: string;
   city: string;
   image: string;
   price: number;
+  state: string;
 };
 
 export const PurchaseConfirm: FC<props> = ({
   title,
   name,
+  lastname,
   email,
-  address,
+  address1,
   city,
   image,
   price,
+  state,
 }) => {
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -57,7 +61,9 @@ export const PurchaseConfirm: FC<props> = ({
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
               Name:
             </Typography>
-            <Typography variant="body2">{name}</Typography>
+            <Typography variant="body2">
+              {name} {lastname}
+            </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
               Email:
             </Typography>
@@ -72,11 +78,15 @@ export const PurchaseConfirm: FC<props> = ({
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
               Address Number:
             </Typography>
-            <Typography variant="body2">{address}</Typography>
+            <Typography variant="body2">{address1}</Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
               City:
             </Typography>
             <Typography variant="body2">{city}</Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+              State:
+            </Typography>
+            <Typography variant="body2">{state}</Typography>
           </CardContent>
         </Card>
       </Grid>
