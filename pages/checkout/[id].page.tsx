@@ -28,7 +28,7 @@ const CheckoutComic: NextPage<props> = ({ data }) => {
       image={data.thumbnail.path + "." + data.thumbnail.extension}
       price={data.price}
       id={data.id}
-      idSnackbar={data}
+      idSnackbar={data.id}
     />
   );
 };
