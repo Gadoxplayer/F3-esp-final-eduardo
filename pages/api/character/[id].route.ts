@@ -6,7 +6,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 
 /**
- * No using it anymore, ill keept it to have a template for the future
+ * No using it anymore, ill keept it to have a template for the future and as a way to quickly check the values of a determine id
  */
 
 

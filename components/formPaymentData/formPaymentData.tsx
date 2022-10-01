@@ -64,10 +64,9 @@ export const FormPaymentData: FC<RegisterFormProps> = ({
       const handledData = { inital: infoSnackbar.data, data: idSnackbar };
       router.push(
         {
-          pathname: `/confirmation/${idSnackbar}`,
+          pathname: `/confirmation/`,
           query: { data: JSON.stringify(handledData) },
         },
-        `/confirmation/${idSnackbar}`
       );
     }
   }, [infoSnackbar]);
@@ -84,10 +83,10 @@ export const FormPaymentData: FC<RegisterFormProps> = ({
     event?: React.SyntheticEvent | Event,
     reason?: string
   ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpenSnackbar(false);
+  //   if (reason === "clickaway") {
+  //     return;
+  //   }
+    setOpenSnackbar(!false)
   };
 
   return (
@@ -102,19 +101,7 @@ export const FormPaymentData: FC<RegisterFormProps> = ({
             {messageSnackbar}
           </Alert>
         </Snackbar>
-        <Snackbar
-          open={openSnackbar}
-          autoHideDuration={6000}
-          onClose={handleClose}
-        >
-          <Alert
-            onClose={handleClose}
-            severity="success"
-            sx={{ width: "100%" }}
-          >
-            {messageSnackbar}
-          </Alert>
-        </Snackbar>
+
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <ControlledInput name={"nameOnCard"} label={"Name On Card"} />

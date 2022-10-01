@@ -7,7 +7,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 
 /**
- * handleDetails is a handler for the route, which fetches data of a specific comic
+ * handleDetails is a handler for the route, which fetches data of a specific comic and as a way to quickly check the values of a determine id
  * @param req 
  * @param res 
  * @author Eduardo C
