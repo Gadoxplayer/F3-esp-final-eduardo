@@ -35,7 +35,7 @@ export const PurchaseConfirm: FC<props> = ({
 }) => {
   return (
     <Box sx={{ justifyContent: "center" }}>
-      <Grid >
+      <Grid>
         <Card sx={{ maxWidth: 345, alignSelf: "center", p: 2 }}>
           <CardMedia
             component="img"
@@ -53,40 +53,44 @@ export const PurchaseConfirm: FC<props> = ({
             </Typography>
           </CardContent>
         </Card>
-        <Card sx={{ minWidth: 275, p: 2 }}>
+        <Card sx={{ minWidth: 275 }}>
           <CardContent>
-            <Typography variant="h5" component="div">
+            <Typography sx={{ p: 2 }} variant="h5" component="div">
               Personal data
             </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            <Typography sx={{ mb: 1.5, p: 1 }} color="text.secondary">
               Name:
             </Typography>
-            <Typography variant="body2">
+            <Typography sx={{ p: 2 }} variant="body2">
               {name} {lastname}
             </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            <Typography sx={{ mb: 1.5, p: 1 }} color="text.secondary">
               Email:
             </Typography>
-            <Typography variant="body2">{email}</Typography>
+            <Typography sx={{ p: 2 }} variant="body2">
+              {email}
+            </Typography>
           </CardContent>
         </Card>
         <Card sx={{ minWidth: 275, p: 2 }}>
           <CardContent>
-            <Typography variant="h5" component="div">
+            <Typography sx={{ p: 2 }} variant="h5" component="div">
               Delivery address
             </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            <Typography sx={{ mb: 1.5, p: 1 }} color="text.secondary">
               Address Number:
             </Typography>
             <Typography variant="body2">{address1}</Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            <Typography sx={{ mb: 1.5, p: 1 }} color="text.secondary">
               City:
             </Typography>
             <Typography variant="body2">{city}</Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            <Typography sx={{ mb: 1.5, p: 1 }} color="text.secondary">
               State:
             </Typography>
-            <Typography variant="body2">{state}</Typography>
+            <Typography sx={{ p: 2 }} variant="body2">
+              {state}
+            </Typography>
           </CardContent>
         </Card>
       </Grid>

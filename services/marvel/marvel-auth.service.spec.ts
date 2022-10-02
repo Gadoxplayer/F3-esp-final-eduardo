@@ -12,7 +12,7 @@ describe('MarvelAuthService', () => {
     describe('when generating an authentication string', () => {
         it('should return a valid query string', async () => {
             const authenticationString = generateAuthenticationString();
-            expect(authenticationString).toBe('ts=1585699200000&apikey=PUBLIC_KEY&hash=ce606fdf2365b1f0a05ea2bdde2ee433')
+            expect(authenticationString).toBe('ts=1585717200000&apikey=PUBLIC_KEY&hash=3046f14bdcbe3ca1407cae88718a07f3')
         })
     })
 
