@@ -35,8 +35,10 @@ export const PurchaseConfirm: FC<props> = ({
 }) => {
   return (
     <Box sx={{ justifyContent: "center" }}>
-      <Grid>
-        <Card sx={{ maxWidth: 345, alignSelf: "center", p: 2 }}>
+      <Box
+        sx={{ justifyContent: "center", display: "flex", alignItems: "center" }}
+      >
+        <Card sx={{ maxWidth: 345, alignSelf: "center", p: 2, boxShadow: 0 }}>
           <CardMedia
             component="img"
             height="300"
@@ -53,7 +55,7 @@ export const PurchaseConfirm: FC<props> = ({
             </Typography>
           </CardContent>
         </Card>
-        <Card sx={{ minWidth: 275 }}>
+        <Card sx={{ minWidth: 275, boxShadow: 0 }}>
           <CardContent>
             <Typography sx={{ p: 2 }} variant="h5" component="div">
               Personal data
@@ -72,7 +74,7 @@ export const PurchaseConfirm: FC<props> = ({
             </Typography>
           </CardContent>
         </Card>
-        <Card sx={{ minWidth: 275, p: 2 }}>
+        <Card sx={{ minWidth: 275, p: 2, boxShadow: 0 }}>
           <CardContent>
             <Typography sx={{ p: 2 }} variant="h5" component="div">
               Delivery address
@@ -93,7 +95,7 @@ export const PurchaseConfirm: FC<props> = ({
             </Typography>
           </CardContent>
         </Card>
-      </Grid>
+      </Box>
     </Box>
   );
 };

@@ -1,5 +1,8 @@
 import { privateDecrypt } from "crypto";
 import { CheckoutView } from "dh-marvel/components/checkoutView/checkoutView";
+import BodySingle from "dh-marvel/components/layouts/body/single/body-single";
+import LayoutCheckout from "dh-marvel/components/layouts/layout-checkout";
+import LayoutGeneral from "dh-marvel/components/layouts/layout-general";
 import { CheckoutInput } from "dh-marvel/features/checkout/checkout.types";
 import { OrderProvider } from "dh-marvel/features/formContext/OrderContext";
 import { Comic } from "dh-marvel/features/types";
@@ -23,13 +26,15 @@ const CheckoutComic: NextPage<props> = ({ data }) => {
   }
 
   return (
-    <CheckoutView
-      title={data.title}
-      image={data.thumbnail.path + "." + data.thumbnail.extension}
-      price={data.price}
-      id={data.id}
-      idSnackbar={data.id}
-    />
+    <LayoutCheckout>
+      <CheckoutView
+        title={data.title}
+        image={data.thumbnail.path + "." + data.thumbnail.extension}
+        price={data.price}
+        id={data.id}
+        idSnackbar={data.id}
+      />
+    </LayoutCheckout>
   );
 };
 

@@ -1,10 +1,12 @@
 import { Box, Divider, Link } from "@mui/material";
 import { CharacterCard } from "dh-marvel/components/characterCard/characterCard";
+import LayoutGeneral from "dh-marvel/components/layouts/layout-general";
 import { getCharacter } from "dh-marvel/services/marvel/marvel.service";
 import { NextPage } from "next";
 
 const CharacterId: NextPage = ({ data }: any) => {
   return (
+    <LayoutGeneral>
     <Box sx={{ p: 4 }}>
       <CharacterCard
         image={data.thumbnail.path + "." + data.thumbnail.extension}
@@ -27,6 +29,7 @@ const CharacterId: NextPage = ({ data }: any) => {
         id={data.id}
       />
     </Box>
+    </LayoutGeneral>
   );
 };
 

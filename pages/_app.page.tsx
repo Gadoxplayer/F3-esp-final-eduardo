@@ -8,11 +8,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <LayoutGeneral>
         <OrderProvider>
           <Component {...pageProps} />
         </OrderProvider>
-      </LayoutGeneral>
       <style jsx global>{`
         /* Other global styles such as 'html, body' etc... */
 

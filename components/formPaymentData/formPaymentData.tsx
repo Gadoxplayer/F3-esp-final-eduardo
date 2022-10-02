@@ -89,9 +89,9 @@ export const FormPaymentData: FC<RegisterFormProps> = ({
     event?: React.SyntheticEvent | Event,
     reason?: string
   ) => {
-    //   if (reason === "clickaway") {
-    //     return;
-    //   }
+      if (reason === "clickaway") {
+        return;
+      }
     setOpenSnackbar(!false);
   };
 

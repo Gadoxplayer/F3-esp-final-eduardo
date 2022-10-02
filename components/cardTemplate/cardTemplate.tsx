@@ -27,7 +27,17 @@ export const CardTemplate: FC<props> = ({ title, image, id }) => {
   // };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card
+      sx={{
+        maxWidth: 345,
+        height: 345,
+        border: 1,
+        borderColor: "gray",
+        display: "flex",
+        justifyContent: "space-between",
+        flexDirection: "column",
+      }}
+    >
       <CardMedia component="img" height="140" image={image} alt={title} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">

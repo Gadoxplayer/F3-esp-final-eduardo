@@ -1,6 +1,7 @@
 import { Divider } from "@mui/material";
 import { Box } from "@mui/system";
 import { CardDetail } from "dh-marvel/components/carDetail/cardDetail";
+import LayoutGeneral from "dh-marvel/components/layouts/layout-general";
 import { Comic } from "dh-marvel/features/types";
 import { getComic } from "dh-marvel/services/marvel/marvel.service";
 import { NextPage } from "next";
@@ -18,6 +19,7 @@ interface props {
 const ComicsDetail: NextPage<props> = ({ data }) => {
   return (
     <>
+    <LayoutGeneral>
       <CardDetail
         title={data.title}
         image={data.thumbnail.path + "." + data.thumbnail.extension}
@@ -46,6 +48,7 @@ const ComicsDetail: NextPage<props> = ({ data }) => {
         oldPrice={data.oldPrice}
         id={data.id}
       ></CardDetail>
+      </LayoutGeneral>
     </>
   );
 };

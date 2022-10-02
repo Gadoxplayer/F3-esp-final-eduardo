@@ -62,7 +62,8 @@ export const CheckoutView: FC<props> = ({
 
   return (
     <BodySingle title={`Checkout: ${title}`}>
-      <Box sx={{ width: "100%" }}>
+      <Box sx={{ width: "100%", display:"flex", justifyContent:"center" }}>
+        <Box>
         <Stepper activeStep={activeStep}>
           {steps.map((label, index) => {
             const stepProps: { completed?: boolean } = {};
@@ -97,7 +98,7 @@ export const CheckoutView: FC<props> = ({
             />
           )}
         </React.Fragment>
-      </Box>
+        </Box>
       <Card sx={{ maxWidth: 345, alignSelf: "center" }}>
         <CardMedia
           component="img"
@@ -115,6 +116,7 @@ export const CheckoutView: FC<props> = ({
           </Typography>
         </CardContent>
       </Card>
+      </Box>
     </BodySingle>
   );
 };
