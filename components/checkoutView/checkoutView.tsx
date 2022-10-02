@@ -23,10 +23,10 @@ import { CheckoutInput } from "dh-marvel/features/checkout/checkout.types";
 import { useRouter } from "next/router";
 
 export type props = {
-  title: string;
-  image: string;
-  price: number;
-  id: number;
+  title: string | any;
+  image: string | any;
+  price: number | any;
+  id: number | any;
   idSnackbar: any;
 };
 
@@ -56,7 +56,7 @@ export const CheckoutView: FC<props> = ({
   };
 
   const handlefinal = (id: any) => {
-    router.push(`/confirmation/${id}`);
+    // router.push(`/confirmation/${id}`);
     console.log("a la ruta");
   };
 

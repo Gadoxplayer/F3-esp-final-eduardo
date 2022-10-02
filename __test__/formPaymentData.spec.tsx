@@ -116,7 +116,7 @@ describe("Payment data form", () => {
       });
       expect(mockDispatch).toBeCalledWith({
         payload: {
-          number: "42424242 4242 4242",
+          number: "4242424242424242",
           cvc: "123",
           expDate: "02/28",
           nameOnCard: "TEST USER",

@@ -32,7 +32,7 @@ export const FormPaymentData: FC<RegisterFormProps> = ({
   const methods = useForm<PaymentDataType>({
     resolver: yupResolver(PaymentSchema),
     defaultValues: {
-      number: "42424242 4242 4242",
+      number: "4242424242424242",
       cvc: "123",
       expDate: "02/28",
       nameOnCard: "TEST USER",
@@ -56,20 +56,26 @@ export const FormPaymentData: FC<RegisterFormProps> = ({
   };
 
   useEffect(() => {
+    console.log("dentro del use effect", infoSnackbar);
+
     if (infoSnackbar?.error) {
+      console.log("bsatman", infoSnackbar);
+
       setMessageSnackbar(infoSnackbar?.message);
       setOpenSnackbar(true);
     }
     if (infoSnackbar?.data) {
+      console.log("dentro del if del use effect", infoSnackbar);
+
       const handledData = { inital: infoSnackbar.data, data: idSnackbar };
       router.push(
         {
-          pathname: `/confirmation/`,
+          pathname: `/confirmation/${idSnackbar}`,
           query: { data: JSON.stringify(handledData) },
-        },
-      );
+        });
     }
   }, [infoSnackbar]);
+  console.log("fuera del use effect", infoSnackbar);
 
   const handleonPrevClick = () => {
     onPrevClick();
@@ -83,10 +89,10 @@ export const FormPaymentData: FC<RegisterFormProps> = ({
     event?: React.SyntheticEvent | Event,
     reason?: string
   ) => {
-  //   if (reason === "clickaway") {
-  //     return;
-  //   }
-    setOpenSnackbar(!false)
+    //   if (reason === "clickaway") {
+    //     return;
+    //   }
+    setOpenSnackbar(!false);
   };
 
   return (
