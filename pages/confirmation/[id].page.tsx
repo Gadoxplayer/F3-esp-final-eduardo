@@ -1,4 +1,4 @@
-import { Divider } from "@mui/material";
+import { CardContent, Divider, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { CardDetail } from "dh-marvel/components/carDetail/cardDetail";
 import { PurchaseConfirm } from "dh-marvel/components/purchaseConfirm/purchaseconfirm";
@@ -24,11 +24,18 @@ const Confirmation: NextPage<props> = ({ data }) => {
   if (!data) {
     return <></>;
   }
-  const customer1: any = state.order;
+  const customer1: any = Object.values(Object.keys(state.order)[0]);
   console.log("este es customer1", customer1);
 
   return (
-    <>
+    <Box>
+      <Typography
+        sx={{ fontSize: 25, p: 4, textAlign: "center" }}
+        color="green"
+        fontWeight={"bolder"}
+      >
+        Order Details:
+      </Typography>
       <PurchaseConfirm
         title={data.title}
         name={state.order.customer.name}
@@ -40,7 +47,16 @@ const Confirmation: NextPage<props> = ({ data }) => {
         lastname={state.order.customer.lastname}
         state={state.order.customer.address1}
       ></PurchaseConfirm>
-    </>
+      <CardContent sx={{ p: 2, border: 4, borderColor: "green" }}>
+        <Typography
+          sx={{ fontSize: 25, textAlign: "center" }}
+          color="green"
+          fontWeight={"bolder"}
+        >
+          Enjoy your purchase!
+        </Typography>
+      </CardContent>
+    </Box>
   );
 };
 
